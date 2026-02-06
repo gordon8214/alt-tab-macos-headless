@@ -20,7 +20,9 @@ class BackgroundWork {
     static var permissionsCheckOnTimerQueue: LabeledOperationQueue!
     static var permissionsSystemCallsQueue: LabeledOperationQueue!
 
+    #if !HEADLESS
     private static var debugMenu: DebugMenu!
+    #endif
     private static var totalPotentialThreadCount = 0
 
     static func preStart() {
@@ -54,6 +56,14 @@ class BackgroundWork {
        // logThreadsAndQueuesOnRepeat()
     }
 
+    static func startHeadless() {
+        axCallsFirstAttemptQueue = LabeledOperationQueue("axCallsFirst", .userInteractive, 8)
+        axCallsRetriesQueue = LabeledOperationQueue("axCallsRetry", .userInteractive, 8)
+        axCallsManualDiscoveryQueue = LabeledOperationQueue("axCallsManual", .userInteractive, 8)
+        accessibilityEventsThread = BackgroundThreadWithRunLoop("axEvents", .userInteractive)
+        cliEventsThread = BackgroundThreadWithRunLoop("cliMessages", .userInteractive)
+    }
+
     static func startCrashReportsQueue() {
         if crashReportsQueue == nil {
             // crash reports can be sent off the main thread
@@ -69,6 +79,7 @@ class BackgroundWork {
 
     // useful during development to inspect how many threads are used by AltTab
     private static func logThreadsAndQueuesOnRepeat() {
+        #if !HEADLESS
         // if Logger.decideLevel() == .debug {
             debugMenu = DebugMenu([screenshotsQueue, accessibilityCommandsQueue, axCallsFirstAttemptQueue, axCallsRetriesQueue, axCallsManualDiscoveryQueue])
             debugMenu.orderFront(nil)
@@ -78,6 +89,7 @@ class BackgroundWork {
             //     logQueues()
             // }
         // }
+        #endif
     }
 
     private static func logQueues() -> Void {

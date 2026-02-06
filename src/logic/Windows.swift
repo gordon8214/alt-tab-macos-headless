@@ -72,6 +72,9 @@ class Windows {
     }
 
     static func updatesBeforeShowing() -> Bool {
+#if HEADLESS
+        return false
+#else
         if list.count == 0 || MissionControl.state() == .showAllWindows || MissionControl.state() == .showFrontWindows { return false }
         // TODO: find a way to update space info when spaces are changed, instead of on every trigger
         // workaround: when Preferences > Mission Control > "Displays have separate Spaces" is unchecked,
@@ -89,10 +92,14 @@ class Windows {
         sort()
         if (!list.contains { $0.shouldShowTheUser }) { return false }
         return true
+#endif
     }
 
     // dispatch screenshot requests off the main-thread, then wait for completion
     static func refreshThumbnailsAsync(_ windows: [Window], _ source: RefreshCausedBy, windowRemoved: Bool = false) {
+#if HEADLESS
+        return
+#else
         guard (!windows.isEmpty || windowRemoved) && ScreenRecordingPermission.status == .granted
                && !Preferences.onlyShowApplications()
                && (!Appearance.hideThumbnails || Preferences.previewSelectedWindow) else { return }
@@ -110,6 +117,7 @@ class Windows {
         } else {
             WindowCaptureScreenshotsPrivateApi.oneTimeScreenshots(eligibleWindows, source)
         }
+#endif
     }
 
     static func refreshWhichWindowsToShowTheUser() {
@@ -249,11 +257,17 @@ class Windows {
     static func cycleSelectedWindowIndex(_ step: Int, allowWrap: Bool = true) {
         guard App.app.appIsBeingUsed else { return }
         let nextIndex = selectedWindowIndexAfterCycling(step)
+        #if HEADLESS
+        let shouldBlockWrapAround =
+            ((step > 0 && nextIndex < selectedWindowIndex) || (step < 0 && nextIndex > selectedWindowIndex)) && !allowWrap
+        #else
         // don't wrap-around at the end, if key-repeat
-        if (((step > 0 && nextIndex < selectedWindowIndex) || (step < 0 && nextIndex > selectedWindowIndex)) &&
-            (!allowWrap || ATShortcut.lastEventIsARepeat || !KeyRepeatTimer.timerIsSuspended))
-               // don't cycle to another row, if !allowWrap
-               || (!allowWrap && list[nextIndex].rowIndex != list[selectedWindowIndex].rowIndex) {
+        let shouldBlockWrapAround =
+            ((step > 0 && nextIndex < selectedWindowIndex) || (step < 0 && nextIndex > selectedWindowIndex))
+            && (!allowWrap || ATShortcut.lastEventIsARepeat || !KeyRepeatTimer.timerIsSuspended)
+        #endif
+        // don't cycle to another row, if !allowWrap
+        if shouldBlockWrapAround || (!allowWrap && list[nextIndex].rowIndex != list[selectedWindowIndex].rowIndex) {
             return
         }
         updateSelectedAndHoveredWindowIndex(nextIndex)

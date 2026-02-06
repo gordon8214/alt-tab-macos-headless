@@ -56,13 +56,15 @@ class Applications {
     static func addRunningApplications(_ runningApps: [NSRunningApplication]) {
         runningApps.forEach {
             let bundleIdentifier = $0.bundleIdentifier
+#if !HEADLESS
             let processIdentifier = $0.processIdentifier
             if bundleIdentifier == "com.apple.dock" {
                 DockEvents.observe(processIdentifier)
             }
+#endif
             // com.apple.universalcontrol always fails subscribeToNotification. We blacklist it to save resources on everyone's machines
             if bundleIdentifier != "com.apple.universalcontrol" {
-                findOrCreate(processIdentifier)
+                findOrCreate($0.processIdentifier)
             }
         }
     }

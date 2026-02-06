@@ -69,6 +69,7 @@ fi
 echo "Merge simulation succeeded. Running headless build validation..."
 set -o pipefail
 xcodebuild -workspace alt-tab-macos.xcworkspace -scheme Headless build | scripts/xcbeautify
+scripts/headless/verify_minimal_headless.sh
 
 echo "Running unit tests validation..."
 xcodebuild test -workspace alt-tab-macos.xcworkspace -scheme Test -configuration Release | scripts/xcbeautify

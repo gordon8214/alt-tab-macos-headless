@@ -26,7 +26,7 @@ class App: NSApplication {
     }
 
     func refreshOpenUi(_ windowsToScreenshot: [Window], _ source: RefreshCausedBy, windowRemoved: Bool = false) {
-        Windows.refreshThumbnailsAsync(windowsToScreenshot, source, windowRemoved: windowRemoved)
+        // no-op in headless mode; screenshots/UI refresh are intentionally disabled
     }
 
     func checkIfShortcutsShouldBeDisabled(_ activeWindow: Window?, _ activeApp: Application?) {}
@@ -62,13 +62,11 @@ class App: NSApplication {
         AXUIElement.setGlobalTimeout()
         Preferences.initialize()
 
-        BackgroundWork.preStart()
-
         if AccessibilityPermission.update() != .granted {
             failFast("Accessibility permission is required. Grant it in System Settings > Privacy & Security > Accessibility, then relaunch.")
         }
 
-        BackgroundWork.start()
+        BackgroundWork.startHeadless()
         if !CliEvents.observe() {
             failFast(CliEvents.startupFailureMessage)
         }
@@ -76,9 +74,6 @@ class App: NSApplication {
         NSScreen.updatePreferred()
         Spaces.refresh()
         Screens.refresh()
-
-        SpacesEvents.observe()
-        ScreensEvents.observe()
 
         Applications.initialDiscovery()
         Applications.manuallyRefreshAllWindows()

@@ -31,11 +31,6 @@ target 'alt-tab-macos' do
   shared_alt_tab_pods()
 end
 
-target 'alt-tab-headless' do
-  use_frameworks!
-  shared_alt_tab_pods()
-end
-
 target 'unit-tests' do
   use_frameworks!
   pod 'ShortcutRecorder', :git => 'https://github.com/lwouis/ShortcutRecorder.git', :branch => 'alt-tab-current'

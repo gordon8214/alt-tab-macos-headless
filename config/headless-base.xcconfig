@@ -19,4 +19,21 @@ EXCLUDED_SOURCE_FILE_NAMES = \
   src/logic/events/SystemAppearanceEvents.swift \
   src/logic/events/SystemScrollerStyleEvents.swift \
   src/logic/events/UserDefaultsEvents.swift \
-  src/logic/AppCenterCrashes.swift
+  src/logic/AppCenterCrashes.swift \
+  src/api-wrappers/Logger.swift \
+  src/logic/Preferences.swift \
+  src/logic/DebugProfile.swift \
+  src/api-wrappers/Bash.swift \
+  src/api-wrappers/Markdown.swift \
+  src/api-wrappers/HelperExtensionsTestable.swift \
+  src/logic/Appearance.swift \
+  src/logic/AppearanceTestable.swift \
+  src/api-wrappers/MissionControl.swift \
+  src/logic/events/DockEvents.swift \
+  src/logic/MacroPreferences.swift \
+  src/logic/PreferencesMigrations.swift \
+  src/headless/shims/WindowCaptureShims.swift \
+  src/logic/events/SpacesEvents.swift \
+  src/logic/events/ScreensEvents.swift \
+  src/headless/shims/InputShims.swift \
+  src/headless/shims/DebugMenuShim.swift
