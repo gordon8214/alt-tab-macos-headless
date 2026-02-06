@@ -6,6 +6,7 @@ WorkspaceSettings.xcsettings
 IDEWorkspaceChecks.plist
 /node_modules/
 /DerivedData/
+/DerivedDataHeadless*/
 /build/
 .DS_Store
 /docs/_site/
