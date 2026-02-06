@@ -50,10 +50,8 @@ class App: NSApplication {
 
     private func markReadyAfterInitialDiscovery() {
         BackgroundWork.axCallsManualDiscoveryQueue.addOperation {
-            DispatchQueue.main.async {
-                ReadinessGate.markReady()
-                Logger.info { "Headless initial discovery ready" }
-            }
+            ReadinessGate.markReady()
+            Logger.info { "Headless initial discovery ready" }
         }
     }
 

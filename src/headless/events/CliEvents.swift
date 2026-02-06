@@ -36,6 +36,11 @@ class CliServer {
     private static let readinessWaitSeconds = 5.0
 
     static func executeCommandAndSendResponse(_ rawValue: String) -> Codable {
+        if rawValue == "--list" || rawValue == "--detailed-list" {
+            guard ReadinessGate.waitUntilReady(timeout: readinessWaitSeconds) else {
+                return warmingUpTimeout
+            }
+        }
         var output: Codable = ""
         DispatchQueue.main.sync {
             output = executeCommandAndSendResponse_(rawValue)
@@ -45,18 +50,12 @@ class CliServer {
 
     private static func executeCommandAndSendResponse_(_ rawValue: String) -> Codable {
         if rawValue == "--list" {
-            guard ReadinessGate.waitUntilReady(timeout: readinessWaitSeconds) else {
-                return warmingUpTimeout
-            }
             return JsonWindowList(windows: Windows.list
                 .filter { !$0.isWindowlessApp }
                 .map { JsonWindow(id: $0.cgWindowId, title: $0.title) }
             )
         }
         if rawValue == "--detailed-list" {
-            guard ReadinessGate.waitUntilReady(timeout: readinessWaitSeconds) else {
-                return warmingUpTimeout
-            }
             return JsonWindowFullList(windows: Windows.list
                 .filter { !$0.isWindowlessApp }
                 .map {

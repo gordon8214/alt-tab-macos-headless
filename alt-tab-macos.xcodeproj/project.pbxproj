@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		01899E71BAFC1303EA1B06BF /* AXUIElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04BA6F823BC0EDA9AA4B80A /* AXUIElement.swift */; };
+		051C24661ED11961A4175F15 /* HeadlessSignalExitPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8429673289E6A494BFFB19B /* HeadlessSignalExitPolicyTests.swift */; };
 		053F8E0890CB24527173B779 /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0C8353097840D7DB1E0E2E /* Markdown.swift */; };
 		06863AE92AF229B9FE02CA4C /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325CAA5E738F9E98F6E318E /* main.swift */; };
 		07A7FBE824CBC572CACBF6ED /* DockEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0C870C14C20C936BA4AF40 /* DockEvents.swift */; };
@@ -69,11 +70,14 @@
 		1C961FA2D2D99AE54EBECA67 /* titles_show_running_windows_light@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1C9610B2E76F1E429C8D3660 /* titles_show_running_windows_light@2x.jpg */; };
 		1C961FB59566B8314771F58E /* thumbnails_show_preview_focused_window_light@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1C961EF84B061A68FD9AEC46 /* thumbnails_show_preview_focused_window_light@2x.jpg */; };
 		234B43488AFE373C8D525E49 /* SkyLight.framework.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0C8B94D7994AB9007F6391 /* SkyLight.framework.swift */; };
+		2B4A7C6ABEC29EB1780CB866 /* SignalExitPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562A939A58589F79D3595218 /* SignalExitPolicy.swift */; };
 		30CA92C7ACEBEF8789B3F268 /* ScreensEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0C822D3BEDAB1F1C9F775E /* ScreensEvents.swift */; };
 		317F5A7C5B9DAF87264617F8 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04BA10777505D8A67ABD186 /* Application.swift */; };
 		35BA584DEE9DCBA5C26D37C9 /* SpacesEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0C8DF008F1EB5F23291A13 /* SpacesEvents.swift */; };
 		3AE34AF59353F1D50ACC30EF /* WindowDiscriminator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F17452D2F1A907800128EF8 /* WindowDiscriminator.swift */; };
+		3DDE86486238A81F4AB2FEAB /* HeadlessReadinessGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8A03A9C883DDF629ABF0E7 /* HeadlessReadinessGateTests.swift */; };
 		442E26DB1F7DA80AF794CCB6 /* Pods_unit_tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7E6F409CA442F83B7BE71AD /* Pods_unit_tests.framework */; };
+		462DB6E45721D6BDA814A937 /* SignalExitPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562A939A58589F79D3595218 /* SignalExitPolicy.swift */; };
 		4807A6C623A9CD190052A53E /* SkyLight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4807A6C523A9CD190052A53E /* SkyLight.framework */; };
 		48F3E16224EC0D8800A1C64B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D04BABDA79F8EF76E3ACDD5F /* Localizable.strings */; };
 		4CCD8C9497CC8529EB3486C9 /* HelperExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04BAD91161791D42FEC4A60 /* HelperExtensions.swift */; };
@@ -230,6 +234,7 @@
 		BF0C8F9B8014AD21E68B1349 /* HelperExtensionsTestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0C810FA0F6BC70E5886E11 /* HelperExtensionsTestable.swift */; };
 		BF0C8FF2A4B00D409494EA80 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BF0C88D79FA0C773D94F351A /* InfoPlist.strings */; };
 		BF19621E6005347CDBD7983C /* PreferencesMigrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0C8F58B38F29B2662E6C2D /* PreferencesMigrations.swift */; };
+		C7A0D6ED703340AB88AD7F48 /* ReadinessGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6518D59F8186C61C70EF6 /* ReadinessGate.swift */; };
 		CAFAD313FF3025C317F8C882 /* Spaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04BA7CF9C2D1BEC7C05AB24 /* Spaces.swift */; };
 		CD41B052E487B1AB570482E1 /* ApplicationDiscriminator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F791E4A2F1C65E100B6419C /* ApplicationDiscriminator.swift */; };
 		D04BA004884A273D4D2D3EF1 /* HelperExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04BAD91161791D42FEC4A60 /* HelperExtensions.swift */; };
@@ -406,6 +411,7 @@
 		1C961FB3DCF4906FEEF4A23D /* TableGroupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableGroupView.swift; sourceTree = "<group>"; };
 		4807A6C523A9CD190052A53E /* SkyLight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SkyLight.framework; path = ../../../../System/Library/PrivateFrameworks/SkyLight.framework; sourceTree = "<group>"; };
 		481FE54624D2D387001032F1 /* alt-tab-macos-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "alt-tab-macos-Bridging-Header.h"; sourceTree = "<group>"; };
+		562A939A58589F79D3595218 /* SignalExitPolicy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SignalExitPolicy.swift; sourceTree = "<group>"; };
 		57A5E74D6C561B1BE77626C3 /* CliEvents.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CliEvents.swift; path = CliEvents.swift; sourceTree = "<group>"; };
 		5883F0A729A5182C0071DB65 /* TrackpadEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackpadEvents.swift; sourceTree = "<group>"; };
 		59DD4BE63D42EEFF1182BA7F /* Pods-alt-tab-macos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-alt-tab-macos.release.xcconfig"; path = "Target Support Files/Pods-alt-tab-macos/Pods-alt-tab-macos.release.xcconfig"; sourceTree = "<group>"; };
@@ -781,12 +787,14 @@
 		D04BAF6F617FCA44D1F75B60 /* alt_tab_macos.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = alt_tab_macos.entitlements; sourceTree = "<group>"; };
 		D04BAFA20F13FB588F6CCB81 /* bug_report.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = bug_report.md; sourceTree = "<group>"; };
 		D04BAFDA9E2623E21CBD6CEF /* zh-TW */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = "zh-TW"; path = InfoPlist.strings; sourceTree = "<group>"; };
+		D8429673289E6A494BFFB19B /* HeadlessSignalExitPolicyTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HeadlessSignalExitPolicyTests.swift; sourceTree = "<group>"; };
 		D8F0F0D994EDFE73982D5888 /* PermissionsShims.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PermissionsShims.swift; path = PermissionsShims.swift; sourceTree = "<group>"; };
 		DCF88985B9F3DDF2CAFF4203 /* headless-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "headless-debug.xcconfig"; path = "headless-debug.xcconfig"; sourceTree = "<group>"; };
 		E20104DD2C3DE10E7CCC5B5A /* Pods-unit-tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unit-tests.release.xcconfig"; path = "Target Support Files/Pods-unit-tests/Pods-unit-tests.release.xcconfig"; sourceTree = "<group>"; };
 		E6B56AD8CF0BFC764E305635 /* App.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = App.swift; path = App.swift; sourceTree = "<group>"; };
 		EC737805564163A2DEDBBD60 /* Pods-alt-tab-headless.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-alt-tab-headless.release.xcconfig"; path = "Target Support Files/Pods-alt-tab-headless/Pods-alt-tab-headless.release.xcconfig"; sourceTree = "<group>"; };
 		F87C56F05662282C2CE489DA /* alt-tab-headless.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "alt-tab-headless.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD8A03A9C883DDF629ABF0E7 /* HeadlessReadinessGateTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HeadlessReadinessGateTests.swift; sourceTree = "<group>"; };
 		FF4FD0711647858F417F4D62 /* Info-headless.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Info-headless.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -996,6 +1004,7 @@
 			isa = PBXGroup;
 			children = (
 				78E6518D59F8186C61C70EF6 /* ReadinessGate.swift */,
+				562A939A58589F79D3595218 /* SignalExitPolicy.swift */,
 			);
 			name = runtime;
 			path = runtime;
@@ -1214,6 +1223,8 @@
 				BF0C8AE65DDFD6359BE12CB3 /* resources */,
 				BF0C8308B436837FA3EDED86 /* CustomRecorderControlTests.swift */,
 				BF0C89231FD53C4D55E3CF9A /* Helpers.swift */,
+				FD8A03A9C883DDF629ABF0E7 /* HeadlessReadinessGateTests.swift */,
+				D8429673289E6A494BFFB19B /* HeadlessSignalExitPolicyTests.swift */,
 			);
 			path = "unit-tests";
 			sourceTree = "<group>";
@@ -2675,6 +2686,7 @@
 				D064322CA7D25F62109D80DE /* WindowCaptureShims.swift in Sources */,
 				FBCD2C561B9A4C7AF9EB1093 /* InputShims.swift in Sources */,
 				664DCDD2428F1540E7BEBEC0 /* DebugMenuShim.swift in Sources */,
+				462DB6E45721D6BDA814A937 /* SignalExitPolicy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2695,6 +2707,10 @@
 				BF0C8F9B8014AD21E68B1349 /* HelperExtensionsTestable.swift in Sources */,
 				BF0C8CEBBC2E851D16FF4757 /* CustomRecorderControlTests.swift in Sources */,
 				BF0C87B5EDCFC573CE220137 /* Helpers.swift in Sources */,
+				2B4A7C6ABEC29EB1780CB866 /* SignalExitPolicy.swift in Sources */,
+				C7A0D6ED703340AB88AD7F48 /* ReadinessGate.swift in Sources */,
+				3DDE86486238A81F4AB2FEAB /* HeadlessReadinessGateTests.swift in Sources */,
+				051C24661ED11961A4175F15 /* HeadlessSignalExitPolicyTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

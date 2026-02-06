@@ -20,7 +20,11 @@ case .daemon:
 
 [SIGTERM, SIGTRAP].forEach {
     signal($0) { s in
-        emergencyExit("Exiting after receiving signal", s)
+        if SignalExitPolicy.shouldEmergencyExit(for: s) {
+            emergencyExit("Exiting after receiving signal", s)
+        } else {
+            gracefulExit("Exiting after receiving signal", s)
+        }
     }
 }
 
@@ -40,5 +44,10 @@ func printStackTrace() {
 fileprivate func emergencyExit(_ logs: Any?...) {
     print(logs)
     printStackTrace()
-    exit(1)
+    exit(SignalExitPolicy.exitCode(for: SIGTRAP))
+}
+
+fileprivate func gracefulExit(_ logs: Any?...) {
+    print(logs)
+    exit(SignalExitPolicy.exitCode(for: SIGTERM))
 }

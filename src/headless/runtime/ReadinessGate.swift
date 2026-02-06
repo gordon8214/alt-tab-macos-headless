@@ -27,4 +27,10 @@ final class ReadinessGate {
         }
         return ready
     }
+
+    static func resetForTesting() {
+        condition.lock()
+        ready = false
+        condition.unlock()
+    }
 }
