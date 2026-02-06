@@ -86,6 +86,7 @@ Commits follow [Conventional Commits](https://www.conventionalcommits.org/) enfo
 - Daemon/client IPC port: `com.lwouis.alt-tab-macos.headless.cli` (separate from GUI app port)
 - Readiness behavior: list commands wait up to 5 seconds for initial discovery, then return explicit warm-up timeout error
 - Permission behavior: headless daemon fails fast when Accessibility permission is missing
+- Runtime refresh model: headless does not register long-lived Spaces/Screens observers; instead, each `--list` / `--detailed-list` request refreshes Spaces/Screens state and recalculates per-window space/screen mapping before JSON serialization
 
 ### Threading Model
 `BackgroundWork` manages all threads and queues:

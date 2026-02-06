@@ -4,10 +4,28 @@ set -euo pipefail
 
 WORKSPACE="alt-tab-macos.xcworkspace"
 SCHEME="Headless"
-TARGET="alt-tab-headless"
+CONFIGURATION=""
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --configuration)
+      CONFIGURATION="$2"
+      shift 2
+      ;;
+    *)
+      echo "Unknown argument: $1" >&2
+      exit 1
+      ;;
+  esac
+done
+
+xcodebuild_args=(-workspace "$WORKSPACE" -scheme "$SCHEME")
+if [[ -n "$CONFIGURATION" ]]; then
+  xcodebuild_args+=(-configuration "$CONFIGURATION")
+fi
 
 build_settings="$(
-  xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -showBuildSettings | awk '
+  xcodebuild "${xcodebuild_args[@]}" -showBuildSettings | awk '
     /Build settings for action build and target alt-tab-headless:/ { capture = 1; next }
     /Build settings for action build and target / { if (capture) exit }
     capture { print }
@@ -27,8 +45,9 @@ extract_setting() {
 
 target_build_dir="$(extract_setting TARGET_BUILD_DIR)"
 wrapper_name="$(extract_setting WRAPPER_NAME)"
-objroot="$(extract_setting OBJROOT)"
 executable_name="$(extract_setting EXECUTABLE_NAME)"
+target_temp_dir="$(extract_setting TARGET_TEMP_DIR)"
+native_arch="$(extract_setting NATIVE_ARCH_64_BIT)"
 
 app_path="$target_build_dir/$wrapper_name"
 binary_path="$app_path/Contents/MacOS/$executable_name"
@@ -70,12 +89,10 @@ if [[ -d "$frameworks_path" ]]; then
   done
 fi
 
-swift_file_list="$(
-  find "$objroot" -type f -path "*alt-tab-headless.build*AltTabHeadless.SwiftFileList" -print | awk 'NR==1 { print; exit }'
-)"
+swift_file_list="$(scripts/headless/select_swift_file_list.sh --target-temp-dir "$target_temp_dir" --native-arch "$native_arch")"
 
 if [[ -z "$swift_file_list" || ! -f "$swift_file_list" ]]; then
-  echo "Could not locate AltTabHeadless.SwiftFileList under $objroot" >&2
+  echo "Could not locate AltTabHeadless.SwiftFileList for target temp dir $target_temp_dir" >&2
   exit 1
 fi
 

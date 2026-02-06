@@ -36,6 +36,10 @@ class CliServer {
     static let noOutput = CliServerCode.noOutput.rawValue
     static let unsupported = CliServerCode.unsupported.rawValue
     static let warmingUpTimeout = CliServerCode.warmingUpTimeout.rawValue
+    private static let listingStateBootstrap: Void = {
+        HeadlessListingState.refreshStateForListing = defaultRefreshStateForListing
+        HeadlessListingState.windowSnapshotsProvider = defaultWindowSnapshotsProvider
+    }()
 
     static func executeCommandAndSendResponse(_ rawValue: String) -> Codable {
         if let preflightCode = HeadlessCliPolicy.preflightCode(for: rawValue) {
@@ -56,33 +60,29 @@ class CliServer {
 
         switch command {
         case .list:
-            return JsonWindowList(windows: Windows.list
-                .filter { !$0.isWindowlessApp }
-                .map { JsonWindow(id: $0.cgWindowId, title: $0.title) }
-            )
+            let windows = refreshedVisibleSnapshots()
+            return JsonWindowList(windows: windows.map { JsonWindow(id: $0.id, title: $0.title) })
 
         case .detailedList:
-            return JsonWindowFullList(windows: Windows.list
-                .filter { !$0.isWindowlessApp }
-                .map {
-                    JsonWindowFull(
-                        id: $0.cgWindowId,
-                        title: $0.title,
-                        appName: $0.application.localizedName,
-                        appBundleId: $0.application.bundleIdentifier,
-                        spaceIndexes: $0.spaceIndexes,
-                        lastFocusOrder: $0.lastFocusOrder,
-                        creationOrder: $0.creationOrder,
-                        isTabbed: $0.isTabbed,
-                        isHidden: $0.isHidden,
-                        isFullscreen: $0.isFullscreen,
-                        isMinimized: $0.isMinimized,
-                        isOnAllSpaces: $0.isOnAllSpaces,
-                        position: $0.position,
-                        size: $0.size
-                    )
-                }
-            )
+            let windows = refreshedVisibleSnapshots()
+            return JsonWindowFullList(windows: windows.map {
+                JsonWindowFull(
+                    id: $0.id,
+                    title: $0.title,
+                    appName: $0.appName,
+                    appBundleId: $0.appBundleId,
+                    spaceIndexes: $0.spaceIndexes,
+                    lastFocusOrder: $0.lastFocusOrder,
+                    creationOrder: $0.creationOrder,
+                    isTabbed: $0.isTabbed,
+                    isHidden: $0.isHidden,
+                    isFullscreen: $0.isFullscreen,
+                    isMinimized: $0.isMinimized,
+                    isOnAllSpaces: $0.isOnAllSpaces,
+                    position: $0.position,
+                    size: $0.size
+                )
+            })
 
         case .focus, .focusUsingLastFocusOrder, .show:
             return unsupported
@@ -90,6 +90,23 @@ class CliServer {
         case .help:
             return error
         }
+    }
+
+    private static func refreshedVisibleSnapshots() -> [HeadlessWindowSnapshot] {
+        _ = listingStateBootstrap
+        return HeadlessListingState.refreshedVisibleSnapshots()
+    }
+
+    private static func defaultRefreshStateForListing() {
+        Spaces.refresh()
+        Screens.refresh()
+        for window in Windows.list where !window.isWindowlessApp {
+            window.updateSpacesAndScreen()
+        }
+    }
+
+    private static func defaultWindowSnapshotsProvider() -> [HeadlessWindowSnapshot] {
+        Windows.list.map { HeadlessWindowSnapshot(window: $0) }
     }
 
     private struct JsonWindowList: Codable {
@@ -120,6 +137,26 @@ class CliServer {
         var isOnAllSpaces: Bool
         var position: CGPoint?
         var size: CGSize?
+    }
+}
+
+private extension HeadlessWindowSnapshot {
+    init(window: Window) {
+        id = window.cgWindowId
+        title = window.title
+        appName = window.application.localizedName
+        appBundleId = window.application.bundleIdentifier
+        spaceIndexes = window.spaceIndexes
+        lastFocusOrder = window.lastFocusOrder
+        creationOrder = window.creationOrder
+        isTabbed = window.isTabbed
+        isHidden = window.isHidden
+        isFullscreen = window.isFullscreen
+        isMinimized = window.isMinimized
+        isOnAllSpaces = window.isOnAllSpaces
+        position = window.position
+        size = window.size
+        isWindowlessApp = window.isWindowlessApp
     }
 }
 
