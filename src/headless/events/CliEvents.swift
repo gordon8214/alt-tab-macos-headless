@@ -2,14 +2,17 @@ import Foundation
 
 class CliEvents {
     static let portName = "com.lwouis.alt-tab-macos.headless.cli"
+    static let startupFailureMessage = "Can't listen on message port. Is another headless daemon already running?"
 
-    static func observe() {
+    @discardableResult
+    static func observe() -> Bool {
         var context = CFMessagePortContext(version: 0, info: nil, retain: nil, release: nil, copyDescription: nil)
         if let messagePort = CFMessagePortCreateLocal(nil, portName as CFString, handleEvent, &context, nil),
            let source = CFMessagePortCreateRunLoopSource(nil, messagePort, 0) {
             CFRunLoopAddSource(BackgroundWork.cliEventsThread.runLoop, source, .commonModes)
+            return true
         } else {
-            Logger.error { "Can't listen on message port. Is another headless daemon already running?" }
+            return false
         }
     }
 

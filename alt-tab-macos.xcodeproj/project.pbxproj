@@ -348,8 +348,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		02C0F3DA3F750A13DB1EA88A /* headless-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "headless-release.xcconfig"; path = "headless-release.xcconfig"; sourceTree = "<group>"; };
-		11BB94CD6FD2BFC4C7CC4EE3 /* DebugMenuShim.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DebugMenuShim.swift; path = DebugMenuShim.swift; sourceTree = "<group>"; };
+		02C0F3DA3F750A13DB1EA88A /* headless-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "headless-release.xcconfig"; sourceTree = "<group>"; };
+		11BB94CD6FD2BFC4C7CC4EE3 /* DebugMenuShim.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DebugMenuShim.swift; sourceTree = "<group>"; };
 		12E612FEC16C622DB7C0441B /* Pods_alt_tab_headless.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_alt_tab_headless.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B6210BD698B48E6EBEEAF84 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		1C961003A0D16B9AE3932B3F /* thumbnails_show_colored_circles_light@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "thumbnails_show_colored_circles_light@2x.jpg"; sourceTree = "<group>"; };
@@ -412,7 +412,7 @@
 		4807A6C523A9CD190052A53E /* SkyLight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SkyLight.framework; path = ../../../../System/Library/PrivateFrameworks/SkyLight.framework; sourceTree = "<group>"; };
 		481FE54624D2D387001032F1 /* alt-tab-macos-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "alt-tab-macos-Bridging-Header.h"; sourceTree = "<group>"; };
 		562A939A58589F79D3595218 /* SignalExitPolicy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SignalExitPolicy.swift; sourceTree = "<group>"; };
-		57A5E74D6C561B1BE77626C3 /* CliEvents.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CliEvents.swift; path = CliEvents.swift; sourceTree = "<group>"; };
+		57A5E74D6C561B1BE77626C3 /* CliEvents.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CliEvents.swift; sourceTree = "<group>"; };
 		5883F0A729A5182C0071DB65 /* TrackpadEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackpadEvents.swift; sourceTree = "<group>"; };
 		59DD4BE63D42EEFF1182BA7F /* Pods-alt-tab-macos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-alt-tab-macos.release.xcconfig"; path = "Target Support Files/Pods-alt-tab-macos/Pods-alt-tab-macos.release.xcconfig"; sourceTree = "<group>"; };
 		5F04852D2F09AC9700235D4A /* WindowCaptureEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowCaptureEvents.swift; sourceTree = "<group>"; };
@@ -442,12 +442,12 @@
 		5FEFDF302F181E250065BAA3 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		64ADB247205DE7DDC42E727C /* Pods-alt-tab-headless.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-alt-tab-headless.debug.xcconfig"; path = "Target Support Files/Pods-alt-tab-headless/Pods-alt-tab-headless.debug.xcconfig"; sourceTree = "<group>"; };
 		672F94799CC7C90282AEB3EA /* Pods-alt-tab-macos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-alt-tab-macos.debug.xcconfig"; path = "Target Support Files/Pods-alt-tab-macos/Pods-alt-tab-macos.debug.xcconfig"; sourceTree = "<group>"; };
-		6F3DD4F42933075868515C1C /* InputShims.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InputShims.swift; path = InputShims.swift; sourceTree = "<group>"; };
-		7325CAA5E738F9E98F6E318E /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = main.swift; sourceTree = "<group>"; };
+		6F3DD4F42933075868515C1C /* InputShims.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InputShims.swift; sourceTree = "<group>"; };
+		7325CAA5E738F9E98F6E318E /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		7451B8433E47C444A6F489FF /* Pods-unit-tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unit-tests.debug.xcconfig"; path = "Target Support Files/Pods-unit-tests/Pods-unit-tests.debug.xcconfig"; sourceTree = "<group>"; };
-		78E6518D59F8186C61C70EF6 /* ReadinessGate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReadinessGate.swift; path = ReadinessGate.swift; sourceTree = "<group>"; };
-		96FE1D41503422D33AF4CBD8 /* UIShims.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UIShims.swift; path = UIShims.swift; sourceTree = "<group>"; };
-		9932C7FDEDE8C5EC2A458E29 /* WindowCaptureShims.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WindowCaptureShims.swift; path = WindowCaptureShims.swift; sourceTree = "<group>"; };
+		78E6518D59F8186C61C70EF6 /* ReadinessGate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadinessGate.swift; sourceTree = "<group>"; };
+		96FE1D41503422D33AF4CBD8 /* UIShims.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UIShims.swift; sourceTree = "<group>"; };
+		9932C7FDEDE8C5EC2A458E29 /* WindowCaptureShims.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WindowCaptureShims.swift; sourceTree = "<group>"; };
 		AA974BA829B7D84C0099A29E /* PreviewPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewPanel.swift; sourceTree = "<group>"; };
 		BF0C800363086A5ED019FE11 /* google_translate_all_terms_locally.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = google_translate_all_terms_locally.py; sourceTree = "<group>"; };
 		BF0C804765D0E6A92C6646CC /* gu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = gu; path = InfoPlist.strings; sourceTree = "<group>"; };
@@ -788,12 +788,12 @@
 		D04BAFA20F13FB588F6CCB81 /* bug_report.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = bug_report.md; sourceTree = "<group>"; };
 		D04BAFDA9E2623E21CBD6CEF /* zh-TW */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = "zh-TW"; path = InfoPlist.strings; sourceTree = "<group>"; };
 		D8429673289E6A494BFFB19B /* HeadlessSignalExitPolicyTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HeadlessSignalExitPolicyTests.swift; sourceTree = "<group>"; };
-		D8F0F0D994EDFE73982D5888 /* PermissionsShims.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PermissionsShims.swift; path = PermissionsShims.swift; sourceTree = "<group>"; };
-		DCF88985B9F3DDF2CAFF4203 /* headless-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "headless-debug.xcconfig"; path = "headless-debug.xcconfig"; sourceTree = "<group>"; };
+		D8F0F0D994EDFE73982D5888 /* PermissionsShims.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PermissionsShims.swift; sourceTree = "<group>"; };
+		DCF88985B9F3DDF2CAFF4203 /* headless-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "headless-debug.xcconfig"; sourceTree = "<group>"; };
 		E20104DD2C3DE10E7CCC5B5A /* Pods-unit-tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unit-tests.release.xcconfig"; path = "Target Support Files/Pods-unit-tests/Pods-unit-tests.release.xcconfig"; sourceTree = "<group>"; };
-		E6B56AD8CF0BFC764E305635 /* App.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = App.swift; path = App.swift; sourceTree = "<group>"; };
+		E6B56AD8CF0BFC764E305635 /* App.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		EC737805564163A2DEDBBD60 /* Pods-alt-tab-headless.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-alt-tab-headless.release.xcconfig"; path = "Target Support Files/Pods-alt-tab-headless/Pods-alt-tab-headless.release.xcconfig"; sourceTree = "<group>"; };
-		F87C56F05662282C2CE489DA /* alt-tab-headless.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "alt-tab-headless.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F87C56F05662282C2CE489DA /* AltTabHeadless.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AltTabHeadless.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD8A03A9C883DDF629ABF0E7 /* HeadlessReadinessGateTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HeadlessReadinessGateTests.swift; sourceTree = "<group>"; };
 		FF4FD0711647858F417F4D62 /* Info-headless.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Info-headless.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -970,7 +970,6 @@
 			children = (
 				57A5E74D6C561B1BE77626C3 /* CliEvents.swift */,
 			);
-			name = events;
 			path = events;
 			sourceTree = "<group>";
 		};
@@ -983,7 +982,6 @@
 				B04CD2355E0D38B39CD51C50 /* runtime */,
 				D3D184326DFB0956AF7ABDEE /* shims */,
 			);
-			name = headless;
 			path = headless;
 			sourceTree = "<group>";
 		};
@@ -1006,7 +1004,6 @@
 				78E6518D59F8186C61C70EF6 /* ReadinessGate.swift */,
 				562A939A58589F79D3595218 /* SignalExitPolicy.swift */,
 			);
-			name = runtime;
 			path = runtime;
 			sourceTree = "<group>";
 		};
@@ -1553,7 +1550,7 @@
 			children = (
 				D04BA82F792DF53958D92572 /* AltTab.app */,
 				BF0C832DEED422648209CCD2 /* unit-tests.xctest */,
-				F87C56F05662282C2CE489DA /* alt-tab-headless.app */,
+				F87C56F05662282C2CE489DA /* AltTabHeadless.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2131,7 +2128,6 @@
 				6F3DD4F42933075868515C1C /* InputShims.swift */,
 				11BB94CD6FD2BFC4C7CC4EE3 /* DebugMenuShim.swift */,
 			);
-			name = shims;
 			path = shims;
 			sourceTree = "<group>";
 		};
@@ -2162,7 +2158,7 @@
 			);
 			name = "alt-tab-headless";
 			productName = "alt-tab-headless";
-			productReference = F87C56F05662282C2CE489DA /* alt-tab-headless.app */;
+			productReference = F87C56F05662282C2CE489DA /* AltTabHeadless.app */;
 			productType = "com.apple.product-type.application";
 		};
 		BF0C873EC188A7EBBCF4310D /* unit-tests */ = {
@@ -3717,6 +3713,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.lwouis.alt-tab-macos.headless";
 				PRODUCT_NAME = AltTabHeadless;
 				SDKROOT = macosx;
+				SWIFT_VERSION = 5.8;
 			};
 			name = Release;
 		};
@@ -3734,6 +3731,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.lwouis.alt-tab-macos.headless";
 				PRODUCT_NAME = AltTabHeadless;
 				SDKROOT = macosx;
+				SWIFT_VERSION = 5.8;
 			};
 			name = Debug;
 		};

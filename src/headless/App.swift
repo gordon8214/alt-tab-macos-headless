@@ -69,6 +69,9 @@ class App: NSApplication {
         }
 
         BackgroundWork.start()
+        if !CliEvents.observe() {
+            failFast(CliEvents.startupFailureMessage)
+        }
 
         NSScreen.updatePreferred()
         Spaces.refresh()
@@ -81,7 +84,6 @@ class App: NSApplication {
         Applications.manuallyRefreshAllWindows()
         markReadyAfterInitialDiscovery()
 
-        CliEvents.observe()
         Logger.info { "Headless daemon is running" }
     }
 }
