@@ -32,18 +32,16 @@ class CliEvents {
 
 class CliServer {
     static let jsonEncoder = JSONEncoder()
-    static let error = "error"
-    static let noOutput = "noOutput"
-    static let unsupported = "unsupported"
-    static let warmingUpTimeout = "warmingUpTimeout"
-    private static let readinessWaitSeconds = 5.0
+    static let error = CliServerCode.error.rawValue
+    static let noOutput = CliServerCode.noOutput.rawValue
+    static let unsupported = CliServerCode.unsupported.rawValue
+    static let warmingUpTimeout = CliServerCode.warmingUpTimeout.rawValue
 
     static func executeCommandAndSendResponse(_ rawValue: String) -> Codable {
-        if rawValue == "--list" || rawValue == "--detailed-list" {
-            guard ReadinessGate.waitUntilReady(timeout: readinessWaitSeconds) else {
-                return warmingUpTimeout
-            }
+        if let preflightCode = HeadlessCliPolicy.preflightCode(for: rawValue) {
+            return preflightCode.rawValue
         }
+
         var output: Codable = ""
         DispatchQueue.main.sync {
             output = executeCommandAndSendResponse_(rawValue)
@@ -52,13 +50,18 @@ class CliServer {
     }
 
     private static func executeCommandAndSendResponse_(_ rawValue: String) -> Codable {
-        if rawValue == "--list" {
+        guard let command = CliShared.parseServerCommand(rawValue, support: .headlessServer) else {
+            return error
+        }
+
+        switch command {
+        case .list:
             return JsonWindowList(windows: Windows.list
                 .filter { !$0.isWindowlessApp }
                 .map { JsonWindow(id: $0.cgWindowId, title: $0.title) }
             )
-        }
-        if rawValue == "--detailed-list" {
+
+        case .detailedList:
             return JsonWindowFullList(windows: Windows.list
                 .filter { !$0.isWindowlessApp }
                 .map {
@@ -80,11 +83,13 @@ class CliServer {
                     )
                 }
             )
-        }
-        if rawValue.hasPrefix("--focus=") || rawValue.hasPrefix("--focusUsingLastFocusOrder=") || rawValue.hasPrefix("--show=") {
+
+        case .focus, .focusUsingLastFocusOrder, .show:
             return unsupported
+
+        case .help:
+            return error
         }
-        return error
     }
 
     private struct JsonWindowList: Codable {
@@ -118,39 +123,9 @@ class CliServer {
     }
 }
 
-enum CliClientMode {
-    case daemon
-    case help
-    case sendCommand(String)
-    case unsupported(String)
-    case invalid
-}
-
 class CliClient {
-    private static let logsFlag = "--logs="
-
     static func detectMode() -> CliClientMode {
-        let args = CommandLine.arguments
-        if args.count == 1 {
-            return .daemon
-        }
-        if args.count == 2 {
-            let arg = args[1]
-            if arg.starts(with: logsFlag) {
-                return .daemon
-            }
-            if arg == "--help" {
-                return .help
-            }
-            if arg == "--list" || arg == "--detailed-list" {
-                return .sendCommand(arg)
-            }
-            if arg.hasPrefix("--focus=") || arg.hasPrefix("--focusUsingLastFocusOrder=") || arg.hasPrefix("--show=") {
-                return .unsupported(arg)
-            }
-            return .invalid
-        }
-        return .invalid
+        CliShared.detectClientMode(arguments: CommandLine.arguments, support: .headlessClient)
     }
 
     static func printHelp() {

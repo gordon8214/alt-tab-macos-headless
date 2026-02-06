@@ -1,30 +1,9 @@
 #include "Pods/Target Support Files/Pods-alt-tab-headless/Pods-alt-tab-headless.debug.xcconfig"
 #include "base.xcconfig"
+#include "headless-base.xcconfig"
 
-PRODUCT_NAME = AltTabHeadless
-PRODUCT_BUNDLE_IDENTIFIER = com.lwouis.alt-tab-macos.headless
-INFOPLIST_FILE = Info-headless.plist
 CODE_SIGN_IDENTITY = Local Self-Signed
 SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG
 OTHER_SWIFT_FLAGS = -driver-time-compilation -Xfrontend -warn-long-function-bodies=250 -Xfrontend -warn-long-expression-type-checking=250
 OTHER_CODE_SIGN_FLAGS = --timestamp=none
 SWIFT_COMPILATION_MODE = incremental
-EXCLUDED_SOURCE_FILE_NAMES = \
-  src/main.swift \
-  src/ui/* \
-  src/ui/**/* \
-  src/logic/events/CliEvents.swift \
-  src/logic/SystemPermissions.swift \
-  src/logic/events/WindowCaptureEvents.swift \
-  src/logic/ATShortcut.swift \
-  src/logic/KeyRepeatTimer.swift \
-  src/logic/events/KeyboardEvents.swift \
-  src/logic/events/KeyboardEventsTestable.swift \
-  src/logic/events/MouseEvents.swift \
-  src/logic/events/TrackpadEvents.swift \
-  src/logic/events/ScrollwheelEvents.swift \
-  src/logic/events/CursorEvents.swift \
-  src/logic/events/SystemAppearanceEvents.swift \
-  src/logic/events/SystemScrollerStyleEvents.swift \
-  src/logic/events/UserDefaultsEvents.swift \
-  src/logic/AppCenterCrashes.swift

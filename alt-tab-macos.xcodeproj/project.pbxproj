@@ -185,6 +185,13 @@
 		BF0C894325A54CF0B6B53464 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BF0C8B8B31D2F421AC258351 /* Localizable.strings */; };
 		BF0C896B5D08B7DA8F2024AC /* KeyRepeatTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0C8D606B53D315F2D9927B /* KeyRepeatTimer.swift */; };
 		BF0C8973EC078169170F2634 /* CliEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0C8C69316EAAF6DC9AE391 /* CliEvents.swift */; };
+		E1A311E11C184E958D9F0A01 /* CliShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A311D11C184E958D9F0A01 /* CliShared.swift */; };
+		E1A311E21C184E958D9F0A01 /* CliShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A311D11C184E958D9F0A01 /* CliShared.swift */; };
+		E1A311E31C184E958D9F0A01 /* CliShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A311D11C184E958D9F0A01 /* CliShared.swift */; };
+		E1A311E41C184E958D9F0A01 /* HeadlessCliPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A311D21C184E958D9F0A01 /* HeadlessCliPolicy.swift */; };
+		E1A311E51C184E958D9F0A01 /* HeadlessCliPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A311D21C184E958D9F0A01 /* HeadlessCliPolicy.swift */; };
+		E1A311E61C184E958D9F0A01 /* CliSharedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A311D31C184E958D9F0A01 /* CliSharedTests.swift */; };
+		E1A311E71C184E958D9F0A01 /* HeadlessCliPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A311D41C184E958D9F0A01 /* HeadlessCliPolicyTests.swift */; };
 		BF0C898511686611E4D7D81E /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0C8B2C057099EDABE46779 /* Button.swift */; };
 		BF0C8991399A3277A9A02FFA /* LightImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0C8E63BE7394A6591E74E0 /* LightImageView.swift */; };
 		BF0C89B4B17D7843C32A102E /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0C8353097840D7DB1E0E2E /* Markdown.swift */; };
@@ -790,6 +797,10 @@
 		D8429673289E6A494BFFB19B /* HeadlessSignalExitPolicyTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HeadlessSignalExitPolicyTests.swift; sourceTree = "<group>"; };
 		D8F0F0D994EDFE73982D5888 /* PermissionsShims.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PermissionsShims.swift; sourceTree = "<group>"; };
 		DCF88985B9F3DDF2CAFF4203 /* headless-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "headless-debug.xcconfig"; sourceTree = "<group>"; };
+		E1A311D11C184E958D9F0A01 /* CliShared.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CliShared.swift; sourceTree = "<group>"; };
+		E1A311D21C184E958D9F0A01 /* HeadlessCliPolicy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HeadlessCliPolicy.swift; sourceTree = "<group>"; };
+		E1A311D31C184E958D9F0A01 /* CliSharedTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CliSharedTests.swift; sourceTree = "<group>"; };
+		E1A311D41C184E958D9F0A01 /* HeadlessCliPolicyTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HeadlessCliPolicyTests.swift; sourceTree = "<group>"; };
 		E20104DD2C3DE10E7CCC5B5A /* Pods-unit-tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unit-tests.release.xcconfig"; path = "Target Support Files/Pods-unit-tests/Pods-unit-tests.release.xcconfig"; sourceTree = "<group>"; };
 		E6B56AD8CF0BFC764E305635 /* App.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		EC737805564163A2DEDBBD60 /* Pods-alt-tab-headless.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-alt-tab-headless.release.xcconfig"; path = "Target Support Files/Pods-alt-tab-headless/Pods-alt-tab-headless.release.xcconfig"; sourceTree = "<group>"; };
@@ -1002,6 +1013,7 @@
 			isa = PBXGroup;
 			children = (
 				78E6518D59F8186C61C70EF6 /* ReadinessGate.swift */,
+				E1A311D21C184E958D9F0A01 /* HeadlessCliPolicy.swift */,
 				562A939A58589F79D3595218 /* SignalExitPolicy.swift */,
 			);
 			path = runtime;
@@ -1222,6 +1234,8 @@
 				BF0C89231FD53C4D55E3CF9A /* Helpers.swift */,
 				FD8A03A9C883DDF629ABF0E7 /* HeadlessReadinessGateTests.swift */,
 				D8429673289E6A494BFFB19B /* HeadlessSignalExitPolicyTests.swift */,
+				E1A311D31C184E958D9F0A01 /* CliSharedTests.swift */,
+				E1A311D41C184E958D9F0A01 /* HeadlessCliPolicyTests.swift */,
 			);
 			path = "unit-tests";
 			sourceTree = "<group>";
@@ -2075,6 +2089,7 @@
 				BF0C869E544F968051715452 /* SystemAppearanceEvents.swift */,
 				BF0C8B5D1A9658E64F8ECB56 /* SystemScrollerStyleEvents.swift */,
 				BF0C8643F524515224BF1618 /* KeyboardEventsTestable.swift */,
+				E1A311D11C184E958D9F0A01 /* CliShared.swift */,
 				BF0C8C69316EAAF6DC9AE391 /* CliEvents.swift */,
 				BF0C8FAF34022E23582797F3 /* ScrollwheelEvents.swift */,
 				BF0C81DD40D5AAD9B7C09028 /* CursorEvents.swift */,
@@ -2676,7 +2691,9 @@
 				06863AE92AF229B9FE02CA4C /* main.swift in Sources */,
 				D687C8BBA80CB637D58DE795 /* App.swift in Sources */,
 				1140E0FA2B7A05D806F376C9 /* CliEvents.swift in Sources */,
+				E1A311E11C184E958D9F0A01 /* CliShared.swift in Sources */,
 				816AF732756E32C9BC35B0DA /* ReadinessGate.swift in Sources */,
+				E1A311E41C184E958D9F0A01 /* HeadlessCliPolicy.swift in Sources */,
 				F8BDCB341C8018E77BBA321F /* UIShims.swift in Sources */,
 				7A1F973C6A52082C500A6B33 /* PermissionsShims.swift in Sources */,
 				D064322CA7D25F62109D80DE /* WindowCaptureShims.swift in Sources */,
@@ -2705,8 +2722,12 @@
 				BF0C87B5EDCFC573CE220137 /* Helpers.swift in Sources */,
 				2B4A7C6ABEC29EB1780CB866 /* SignalExitPolicy.swift in Sources */,
 				C7A0D6ED703340AB88AD7F48 /* ReadinessGate.swift in Sources */,
+				E1A311E51C184E958D9F0A01 /* HeadlessCliPolicy.swift in Sources */,
+				E1A311E31C184E958D9F0A01 /* CliShared.swift in Sources */,
 				3DDE86486238A81F4AB2FEAB /* HeadlessReadinessGateTests.swift in Sources */,
 				051C24661ED11961A4175F15 /* HeadlessSignalExitPolicyTests.swift in Sources */,
+				E1A311E61C184E958D9F0A01 /* CliSharedTests.swift in Sources */,
+				E1A311E71C184E958D9F0A01 /* HeadlessCliPolicyTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2801,6 +2822,7 @@
 				BF0C803A13C409E7F01FBCAB /* SkyLight.framework.swift in Sources */,
 				BF0C80C69EFEF93C18539925 /* PreferencesMigrations.swift in Sources */,
 				BF0C8973EC078169170F2634 /* CliEvents.swift in Sources */,
+				E1A311E21C184E958D9F0A01 /* CliShared.swift in Sources */,
 				BF0C8521DA3078516615C414 /* HelperExtensionsTestable.swift in Sources */,
 				BF0C8991399A3277A9A02FFA /* LightImageView.swift in Sources */,
 				BF0C8F40C2D0FF7601D926D3 /* LightweightTimer.swift in Sources */,

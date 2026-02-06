@@ -32,6 +32,20 @@ xcodebuild -workspace alt-tab-macos.xcworkspace -scheme Release -derivedDataPath
 xcodebuild test -workspace alt-tab-macos.xcworkspace -scheme Test -configuration Release
 ```
 
+### Upstream Sync Check
+Use this manual command to validate whether headless can cleanly absorb `master`:
+
+```bash
+SOURCE_REF=master TARGET_REF=headless scripts/headless/sync_check_from_master.sh
+```
+
+Behavior:
+- Fails immediately if your working tree is dirty.
+- Performs a no-commit merge dry run of `SOURCE_REF` into `TARGET_REF` in a temporary worktree.
+- Prints unresolved conflict file paths if merge conflicts occur.
+- On clean merge, runs `Headless` build and `Test` scheme checks before reporting success.
+- Cleans up temporary worktree automatically on success/failure.
+
 ### Formatting
 - SwiftFormat is configured via `.swiftformat` (max line width 110, Swift 5.8)
 - SwiftFormat is currently **disabled project-wide** via `.swiftformatignore` (`**/*`), but the config exists for future use

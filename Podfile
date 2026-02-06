@@ -14,12 +14,7 @@ def deployment_target_from_xcconfig()
     exit 1
 end
 
-deployment_target = deployment_target_from_xcconfig()
-
-platform :osx, deployment_target
-
-target 'alt-tab-macos' do
-  use_frameworks!
+def shared_alt_tab_pods()
   pod 'LetsMove', :git => 'https://github.com/lwouis/LetsMove.git', :commit => '7abf4daed1a25218f2b52f2dfd190aee5a50071c'
   pod 'Sparkle', :podspec => 'https://raw.githubusercontent.com/lwouis/Sparkle/fix-iframe-popup-1.24/Sparkle.podspec'
   pod 'ShortcutRecorder', :git => 'https://github.com/lwouis/ShortcutRecorder.git', :branch => 'alt-tab-current'
@@ -27,13 +22,18 @@ target 'alt-tab-macos' do
   pod 'SwiftyBeaver', '1.9.0'
 end
 
+deployment_target = deployment_target_from_xcconfig()
+
+platform :osx, deployment_target
+
+target 'alt-tab-macos' do
+  use_frameworks!
+  shared_alt_tab_pods()
+end
+
 target 'alt-tab-headless' do
   use_frameworks!
-  pod 'LetsMove', :git => 'https://github.com/lwouis/LetsMove.git', :commit => '7abf4daed1a25218f2b52f2dfd190aee5a50071c'
-  pod 'Sparkle', :podspec => 'https://raw.githubusercontent.com/lwouis/Sparkle/fix-iframe-popup-1.24/Sparkle.podspec'
-  pod 'ShortcutRecorder', :git => 'https://github.com/lwouis/ShortcutRecorder.git', :branch => 'alt-tab-current'
-  pod 'AppCenter/Crashes', '4.3.0'
-  pod 'SwiftyBeaver', '1.9.0'
+  shared_alt_tab_pods()
 end
 
 target 'unit-tests' do

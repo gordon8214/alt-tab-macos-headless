@@ -1,3 +1,5 @@
+import Foundation
+
 class CliEvents {
     static let portName = "com.lwouis.alt-tab-macos.cli"
 
@@ -32,8 +34,8 @@ class CliEvents {
 
 class CliServer {
     static let jsonEncoder = JSONEncoder()
-    static let error = "error"
-    static let noOutput = "noOutput"
+    static let error = CliServerCode.error.rawValue
+    static let noOutput = CliServerCode.noOutput.rawValue
 
     static func executeCommandAndSendReponse(_ rawValue: String) -> Codable {
         var output: Codable = ""
@@ -44,13 +46,18 @@ class CliServer {
     }
 
     private static func executeCommandAndSendReponse_(_ rawValue: String) -> Codable {
-        if rawValue == "--list" {
+        guard let command = CliShared.parseServerCommand(rawValue, support: .guiServer) else {
+            return error
+        }
+
+        switch command {
+        case .list:
             return JsonWindowList(windows: Windows.list
                 .filter { !$0.isWindowlessApp }
                 .map { JsonWindow(id: $0.cgWindowId, title: $0.title) }
             )
-        }
-        if rawValue == "--detailed-list" {
+
+        case .detailedList:
             return JsonWindowFullList(windows: Windows.list
                 .filter { !$0.isWindowlessApp }
                 .map {
@@ -72,23 +79,28 @@ class CliServer {
                     )
                 }
             )
-        }
-        if rawValue.hasPrefix("--focus="),
-           let id = CGWindowID(rawValue.dropFirst("--focus=".count)), let window = (Windows.list.first { $0.cgWindowId == id }) {
+
+        case .focus(let id):
+            guard let window = Windows.list.first(where: { $0.cgWindowId == id }) else {
+                return error
+            }
             window.focus()
             return noOutput
-        }
-        if rawValue.hasPrefix("--focusUsingLastFocusOrder="),
-           let lastFocusOrder = Int(rawValue.dropFirst("--focusUsingLastFocusOrder=".count)), let window = (Windows.list.first { $0.lastFocusOrder == lastFocusOrder }) {
+
+        case .focusUsingLastFocusOrder(let lastFocusOrder):
+            guard let window = Windows.list.first(where: { $0.lastFocusOrder == lastFocusOrder }) else {
+                return error
+            }
             window.focus()
             return noOutput
-        }
-        if rawValue.hasPrefix("--show="),
-           let shortcutIndex = Int(rawValue.dropFirst("--show=".count)), (0...3).contains(shortcutIndex) {
+
+        case .show(let shortcutIndex):
             App.app.showUi(shortcutIndex)
             return noOutput
+
+        case .help:
+            return error
         }
-        return error
     }
 
     private struct JsonWindowList: Codable {
@@ -125,13 +137,12 @@ class CliServer {
 
 class CliClient {
     static func detectCommand() -> String? {
-        let args = CommandLine.arguments
-        if args.count == 2 && !args[1].starts(with: "--logs=") {
-            if args[1] == "--list" || args[1] == "--detailed-list" || args[1].hasPrefix("--focus=") || args[1].hasPrefix("--focusUsingLastFocusOrder=") || args[1].hasPrefix("--show=") {
-                return args[1]
-            }
+        switch CliShared.detectClientMode(arguments: CommandLine.arguments, support: .guiClient) {
+        case .sendCommand(let command):
+            return command
+        case .daemon, .help, .unsupported, .invalid:
+            return nil
         }
-        return nil
     }
 
     static func sendCommandAndProcessResponse(_ command: String) {

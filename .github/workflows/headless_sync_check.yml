@@ -1,0 +1,28 @@
+name: Headless Sync Check
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: Source ref to merge from
+        required: false
+        default: master
+      target_ref:
+        description: Target ref to merge into
+        required: false
+        default: headless
+
+jobs:
+  sync-check:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: sudo xcode-select -s /Applications/Xcode_26.0.1.app/Contents/Developer
+      - run: git fetch --all --prune
+      - name: Run sync check
+        run: |
+          source_ref="${{ github.event.inputs.source_ref }}"
+          target_ref="${{ github.event.inputs.target_ref }}"
+          SOURCE_REF="${source_ref:-master}" TARGET_REF="${target_ref:-headless}" scripts/headless/sync_check_from_master.sh

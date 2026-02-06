@@ -17,3 +17,13 @@
 </div>
 
 </div>
+
+## Headless Upstream Sync Check
+
+Run this from a clean working tree to validate whether headless can absorb upstream changes:
+
+```bash
+SOURCE_REF=master TARGET_REF=headless scripts/headless/sync_check_from_master.sh
+```
+
+The command performs a no-commit merge simulation in a temporary worktree, prints conflict files on failure, and runs the `Headless` build plus `Test` scheme checks on success.
