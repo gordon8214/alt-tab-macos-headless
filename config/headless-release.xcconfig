@@ -7,3 +7,5 @@ OTHER_CODE_SIGN_FLAGS = --timestamp --deep --options runtime
 SWIFT_ACTIVE_COMPILATION_CONDITIONS = HEADLESS
 SWIFT_COMPILATION_MODE = wholemodule
 SWIFT_OPTIMIZATION_LEVEL = -O
+
+#include? "signing-overrides.local.xcconfig"

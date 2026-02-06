@@ -27,3 +27,32 @@ SOURCE_REF=master TARGET_REF=headless scripts/headless/sync_check_from_master.sh
 ```
 
 The command performs a no-commit merge simulation in a temporary worktree, prints conflict files on failure, and runs the `Headless` build plus `Test` scheme checks on success.
+
+## Team Signing Overrides (Distribution Builds)
+
+Use a local xcconfig override so teammates can build properly signed release binaries without editing tracked upstream files.
+
+Run from the repository root:
+
+```bash
+scripts/codesign/setup_team_signing_overrides.sh
+```
+
+Then edit `config/signing-overrides.local.xcconfig` and set:
+- `DEVELOPMENT_TEAM`
+- `CODE_SIGN_IDENTITY` (Developer ID Application certificate)
+
+Validate that placeholders were replaced:
+
+```bash
+scripts/codesign/setup_team_signing_overrides.sh --check
+```
+
+Build signed release binaries with standard commands:
+
+```bash
+xcodebuild -workspace alt-tab-macos.xcworkspace -scheme Release -configuration Release
+xcodebuild -workspace alt-tab-macos.xcworkspace -scheme Headless -configuration Release
+```
+
+`config/signing-overrides.local.xcconfig` is gitignored, and both release xcconfigs now optionally include it, so upstream merges remain low-friction.

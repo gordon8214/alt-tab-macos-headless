@@ -1,0 +1,12 @@
+// Copy this file to config/signing-overrides.local.xcconfig and update values.
+// The local file is gitignored so each teammate can keep their own signing identity.
+//
+// cp config/signing-overrides.local.example.xcconfig config/signing-overrides.local.xcconfig
+// scripts/codesign/setup_team_signing_overrides.sh --check
+
+DEVELOPMENT_TEAM = YOUR_TEAM_ID
+CODE_SIGN_STYLE = Manual
+CODE_SIGN_IDENTITY = Developer ID Application: Your Team Name (YOUR_TEAM_ID)
+
+// If your keychain only has one matching cert, this is also valid:
+// CODE_SIGN_IDENTITY = Developer ID Application
