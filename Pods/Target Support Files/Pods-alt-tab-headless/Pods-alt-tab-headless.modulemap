@@ -1,0 +1,6 @@
+framework module Pods_alt_tab_headless {
+  umbrella header "Pods-alt-tab-headless-umbrella.h"
+
+  export *
+  module * { export * }
+}

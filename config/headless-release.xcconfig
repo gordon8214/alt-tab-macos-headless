@@ -1,0 +1,30 @@
+#include "Pods/Target Support Files/Pods-alt-tab-headless/Pods-alt-tab-headless.release.xcconfig"
+#include "base.xcconfig"
+
+PRODUCT_NAME = AltTabHeadless
+PRODUCT_BUNDLE_IDENTIFIER = com.lwouis.alt-tab-macos.headless
+INFOPLIST_FILE = Info-headless.plist
+CODE_SIGN_IDENTITY = Developer ID Application: Louis Pontoise (QXD7GW8FHY)
+CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO
+OTHER_CODE_SIGN_FLAGS = --timestamp --deep --options runtime
+SWIFT_COMPILATION_MODE = wholemodule
+SWIFT_OPTIMIZATION_LEVEL = -O
+EXCLUDED_SOURCE_FILE_NAMES = \
+  src/main.swift \
+  src/ui/* \
+  src/ui/**/* \
+  src/logic/events/CliEvents.swift \
+  src/logic/SystemPermissions.swift \
+  src/logic/events/WindowCaptureEvents.swift \
+  src/logic/ATShortcut.swift \
+  src/logic/KeyRepeatTimer.swift \
+  src/logic/events/KeyboardEvents.swift \
+  src/logic/events/KeyboardEventsTestable.swift \
+  src/logic/events/MouseEvents.swift \
+  src/logic/events/TrackpadEvents.swift \
+  src/logic/events/ScrollwheelEvents.swift \
+  src/logic/events/CursorEvents.swift \
+  src/logic/events/SystemAppearanceEvents.swift \
+  src/logic/events/SystemScrollerStyleEvents.swift \
+  src/logic/events/UserDefaultsEvents.swift \
+  src/logic/AppCenterCrashes.swift
