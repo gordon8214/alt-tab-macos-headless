@@ -4,7 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-AltTab is a macOS window switcher that brings Windows-style alt-tab functionality to macOS. It is a Swift/AppKit application that heavily uses macOS Accessibility APIs (both public and private) to discover and manipulate windows across all Spaces and applications. It is **not** a SwiftUI app.
+This repository now contains two build targets:
+
+1. **`alt-tab-macos` (GUI)**: the original Swift/AppKit AltTab window switcher.
+2. **`alt-tab-headless` (headless)**: a CLI/daemon-focused variant that reuses the shared window-tracking core and outputs window lists as JSON.
+
+The headless target is intentionally additive (overlay + shims) so window-discovery and switching logic can stay in sync with upstream AltTab changes. The project is **not** a SwiftUI app.
 
 ## Build & Development
 
@@ -14,6 +19,9 @@ AltTab is a macOS window switcher that brings Windows-style alt-tab functionalit
 
 ### Build Commands
 ```bash
+# Headless build
+xcodebuild -workspace alt-tab-macos.xcworkspace -scheme Headless
+
 # Debug build
 xcodebuild -workspace alt-tab-macos.xcworkspace -scheme Debug
 
@@ -42,6 +50,8 @@ Commits follow [Conventional Commits](https://www.conventionalcommits.org/) enfo
 ### Entry Point & App Lifecycle
 - `src/main.swift` — entry point; sets up signal handlers and starts `App.shared.run()`
 - `src/ui/App.swift` — `App` (subclass of `NSApplication`) is the application delegate and central coordinator. It manages the thumbnail panel, preview panel, preferences window, and permissions window. `applicationDidFinishLaunching` initializes the system, checks permissions, then calls `continueAppLaunchAfterPermissionsAreGranted()` to start all background work and event observers
+- `src/headless/main.swift` — headless entry point; runs as daemon with no args, or as CLI client for `--list` / `--detailed-list`
+- `src/headless/App.swift` — headless app delegate; starts only the services required for app/window discovery and CLI message-port handling (no visible UI)
 
 ### Source Layout (`src/`)
 | Directory | Purpose |
@@ -50,10 +60,18 @@ Commits follow [Conventional Commits](https://www.conventionalcommits.org/) enfo
 | `api-wrappers/private-apis/` | Reverse-engineered private macOS frameworks (SkyLight, HIServices) |
 | `logic/` | Business logic — Application/Window models, Preferences, Spaces, Screens, keyboard/shortcut handling |
 | `logic/events/` | Event observers — keyboard, mouse, trackpad, accessibility, Spaces, screens, dock, CLI, scrollwheel |
+| `headless/` | Headless overlay — daemon entrypoint, list-only CLI server/client, readiness gate, and shims for UI/permission/capture/input symbols |
 | `ui/` | All UI — main thumbnail window, preferences window, permissions window, feedback window |
 | `ui/main-window/` | The alt-tab overlay — ThumbnailsPanel, ThumbnailsView, ThumbnailView, PreviewPanel |
 | `ui/preferences-window/` | Preferences tabs (General, Appearance, Controls, Blacklists, Policies, About, Acknowledgments) |
 | `ui/generic-components/` | Reusable AppKit components (buttons, switches, table views, etc.) |
+
+### Headless CLI Contract
+- Supported commands: `--list`, `--detailed-list`, `--help`
+- Unsupported in headless: `--focus=...`, `--focusUsingLastFocusOrder=...`, `--show=...` (explicit non-zero error)
+- Daemon/client IPC port: `com.lwouis.alt-tab-macos.headless.cli` (separate from GUI app port)
+- Readiness behavior: list commands wait up to 5 seconds for initial discovery, then return explicit warm-up timeout error
+- Permission behavior: headless daemon fails fast when Accessibility permission is missing
 
 ### Threading Model
 `BackgroundWork` manages all threads and queues:
@@ -84,6 +102,8 @@ The app uses private macOS APIs from `SkyLight.framework` and `ApplicationServic
 Defined in `config/*.xcconfig` files:
 - `debug.xcconfig` — local self-signed codesign, incremental compilation, `#if DEBUG` flag
 - `release.xcconfig` — Developer ID signing, whole-module optimization, notarization flags
+- `headless-debug.xcconfig` — headless target debug config and source exclusions
+- `headless-release.xcconfig` — headless target release config and source exclusions
 - `test-base.xcconfig` — no codesign, active arch only
 
 ### Testing
