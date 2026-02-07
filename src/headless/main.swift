@@ -9,7 +9,7 @@ case .sendCommand(let command):
     CliClient.sendCommandAndProcessResponse(command)
 case .unsupported(let command):
     print("Unsupported command in headless mode: \(command)")
-    print("Supported commands: --list, --detailed-list, --help")
+    print(CliServer.supportedCommandsMessage)
     exit(1)
 case .invalid:
     CliClient.printHelp()

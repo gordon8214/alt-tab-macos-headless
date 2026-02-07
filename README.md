@@ -1,22 +1,12 @@
-<div align = center>
+# AltTab Headless
 
-# AltTab
+This fork of [AltTab](https://github.com/lwouis/alt-tab-macos) provides a light-weight "headless" implementation of the core window-switching functionality for use via the CLI. It has no UI and allows for the core window 
 
 [![Screenshot](docs/public/demo/frontpage.jpg)](docs/public/demo/frontpage.jpg)
 
 **AltTab** brings the power of Windows alt-tab to macOS
 
-[Official website](https://alt-tab-macos.netlify.app/)<br/><sub>15K stars</sub> | [Download](https://github.com/lwouis/alt-tab-macos/releases/download/v8.3.4/AltTab-8.3.4.zip)<br/><sub>6.7M downloads</sub>
--|-
-
-<div align="right">
-  <p>Project supported by</p>
-  <a href="https://jb.gg/OpenSource">
-    <img src="docs/public/demo/jetbrains.svg" alt="Jetbrains" width="149" height="32">
-  </a>
-</div>
-
-</div>
+[Official website](https://alt-tab-macos.netlify.app/) | [Download](https://github.com/lwouis/alt-tab-macos/releases/download/v8.3.4/AltTab-8.3.4.zip)
 
 ## Headless Upstream Sync Check
 
@@ -34,6 +24,20 @@ The command performs a no-commit merge simulation in a temporary worktree, print
 
 - Headless checks whether `com.lwouis.alt-tab-macos` is already running.
 - If a conflict is found, headless shows a critical alert and exits with status code `1` before starting background services.
+
+## Headless CLI Commands
+
+`AltTabHeadless` supports:
+
+- `--list`: return JSON window list (`id`, `title`)
+- `--detailed-list`: return JSON window list with detailed metadata
+- `--focus=<window_id>`: focus a window by `id`
+- `--focusUsingLastFocusOrder=<focus_order>`: focus by `lastFocusOrder` from `--detailed-list`
+- `--show=<shortcut_index>`: one-shot shortcut-aware cycle-and-focus action (headless equivalent of triggering a shortcut)
+- `--help`: print usage
+
+Run with no arguments to start the headless daemon. List/focus/show commands wait up to 5 seconds for initial discovery, then return a warm-up timeout if still not ready.
+Malformed focus/show payloads (for example `--focus=abc` or `--show=9`) are treated as invalid commands and return the generic command error response.
 
 ## Team Signing Overrides (Distribution Builds)
 

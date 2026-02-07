@@ -57,6 +57,8 @@ class BackgroundWork {
     }
 
     static func startHeadless() {
+        // calls to focus/close/minimize/etc windows
+        accessibilityCommandsQueue = LabeledOperationQueue("axCommands", .userInteractive, 4)
         axCallsFirstAttemptQueue = LabeledOperationQueue("axCallsFirst", .userInteractive, 8)
         axCallsRetriesQueue = LabeledOperationQueue("axCallsRetry", .userInteractive, 8)
         axCallsManualDiscoveryQueue = LabeledOperationQueue("axCallsManual", .userInteractive, 8)

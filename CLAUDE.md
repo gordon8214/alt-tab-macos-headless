@@ -81,20 +81,20 @@ Commits follow [Conventional Commits](https://www.conventionalcommits.org/) enfo
 | `api-wrappers/private-apis/` | Reverse-engineered private macOS frameworks (SkyLight, HIServices) |
 | `logic/` | Business logic — Application/Window models, Preferences, Spaces, Screens, keyboard/shortcut handling |
 | `logic/events/` | Event observers — keyboard, mouse, trackpad, accessibility, Spaces, screens, dock, CLI, scrollwheel |
-| `headless/` | Headless overlay — daemon entrypoint, list-only CLI server/client, readiness gate, and shims for UI/permission/capture/input symbols |
+| `headless/` | Headless overlay — daemon entrypoint, CLI server/client, readiness gate, and shims for UI/permission/capture/input symbols |
 | `ui/` | All UI — main thumbnail window, preferences window, permissions window, feedback window |
 | `ui/main-window/` | The alt-tab overlay — ThumbnailsPanel, ThumbnailsView, ThumbnailView, PreviewPanel |
 | `ui/preferences-window/` | Preferences tabs (General, Appearance, Controls, Blacklists, Policies, About, Acknowledgments) |
 | `ui/generic-components/` | Reusable AppKit components (buttons, switches, table views, etc.) |
 
 ### Headless CLI Contract
-- Supported commands: `--list`, `--detailed-list`, `--help`
-- Unsupported in headless: `--focus=...`, `--focusUsingLastFocusOrder=...`, `--show=...` (explicit non-zero error)
+- Supported commands: `--list`, `--detailed-list`, `--focus=...`, `--focusUsingLastFocusOrder=...`, `--show=...`, `--help`
 - Daemon/client IPC port: `com.lwouis.alt-tab-macos.headless.cli` (separate from GUI app port)
-- Readiness behavior: list commands wait up to 5 seconds for initial discovery, then return explicit warm-up timeout error
+- Readiness behavior: list/focus/show commands wait up to 5 seconds for initial discovery, then return explicit warm-up timeout error
+- Malformed focus/show payloads (e.g. non-numeric IDs or out-of-range shortcut indices) are treated as invalid commands and return the generic command error
 - Permission behavior: headless daemon fails fast when Accessibility permission is missing
 - Startup mutual exclusion: headless refuses to start while GUI AltTab (`com.lwouis.alt-tab-macos`) is running, shows an error alert, and exits
-- Runtime refresh model: headless does not register long-lived Spaces/Screens observers; instead, each `--list` / `--detailed-list` request refreshes Spaces/Screens state and recalculates per-window space/screen mapping before JSON serialization
+- Runtime refresh model: headless does not register long-lived Spaces/Screens observers; instead, each `--list` / `--detailed-list` request refreshes Spaces/Screens state and recalculates per-window space/screen mapping before JSON serialization. `--show=...` performs the same refresh before selecting a focus target.
 
 ### Threading Model
 `BackgroundWork` manages all threads and queues:

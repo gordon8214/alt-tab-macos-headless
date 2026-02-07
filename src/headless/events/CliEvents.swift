@@ -1,4 +1,4 @@
-import Foundation
+import AppKit
 
 class CliEvents {
     static let portName = "com.lwouis.alt-tab-macos.headless.cli"
@@ -36,6 +36,7 @@ class CliServer {
     static let noOutput = CliServerCode.noOutput.rawValue
     static let unsupported = CliServerCode.unsupported.rawValue
     static let warmingUpTimeout = CliServerCode.warmingUpTimeout.rawValue
+    static let supportedCommandsMessage = "Supported commands: --list, --detailed-list, --focus=<window_id>, --focusUsingLastFocusOrder=<focus_order>, --show=<shortcut_index>, --help"
     private static let listingStateBootstrap: Void = {
         HeadlessListingState.refreshStateForListing = defaultRefreshStateForListing
         HeadlessListingState.windowSnapshotsProvider = defaultWindowSnapshotsProvider
@@ -84,8 +85,34 @@ class CliServer {
                 )
             })
 
-        case .focus, .focusUsingLastFocusOrder, .show:
-            return unsupported
+        case .focus(let id):
+            let windows = refreshedWindowsForInteractiveCommands()
+            let windowsForSelection = selectableWindows(windows)
+            guard let selectedWindowIndex = HeadlessCliCommandResolver.resolveWindowListIndex(
+                for: .focus(id),
+                windows: windowsForSelection
+            ),
+                windows.indices.contains(selectedWindowIndex) else {
+                return error
+            }
+            windows[selectedWindowIndex].focus()
+            return noOutput
+
+        case .focusUsingLastFocusOrder(let lastFocusOrder):
+            let windows = refreshedWindowsForInteractiveCommands()
+            let windowsForSelection = selectableWindows(windows)
+            guard let selectedWindowIndex = HeadlessCliCommandResolver.resolveWindowListIndex(
+                for: .focusUsingLastFocusOrder(lastFocusOrder),
+                windows: windowsForSelection
+            ),
+                windows.indices.contains(selectedWindowIndex) else {
+                return error
+            }
+            windows[selectedWindowIndex].focus()
+            return noOutput
+
+        case .show(let shortcutIndex):
+            return focusFromHeadlessShow(shortcutIndex) ? noOutput : error
 
         case .help:
             return error
@@ -98,10 +125,166 @@ class CliServer {
     }
 
     private static func defaultRefreshStateForListing() {
+        NSScreen.updatePreferred()
         Spaces.refresh()
         Screens.refresh()
         for window in Windows.list where !window.isWindowlessApp {
             window.updateSpacesAndScreen()
+        }
+    }
+
+    private static func focusFromHeadlessShow(_ shortcutIndex: Int) -> Bool {
+        guard let preferences = headlessShowSelectionPreferences(shortcutIndex) else {
+            return false
+        }
+
+        App.app.shortcutIndex = shortcutIndex
+        let windows = refreshedWindowsForInteractiveCommands()
+        let windowsForSelection = selectableWindows(windows)
+        let frontmostPid = NSWorkspace.shared.frontmostApplication?.processIdentifier
+        let visibleSpaces = Spaces.visibleSpaces.map { UInt64($0) }
+        guard let selectedWindowIndex = HeadlessCliCommandResolver.resolveWindowListIndex(
+            for: .show(shortcutIndex),
+            windows: windowsForSelection,
+            showPreferences: preferences,
+            frontmostPid: frontmostPid,
+            visibleSpaces: visibleSpaces
+        ),
+            windows.indices.contains(selectedWindowIndex) else {
+            return false
+        }
+        windows[selectedWindowIndex].focus()
+        return true
+    }
+
+    private static func refreshedWindowsForInteractiveCommands() -> [Window] {
+        defaultRefreshStateForListing()
+        return Windows.list
+    }
+
+    private static func headlessShowSelectionPreferences(_ shortcutIndex: Int) -> HeadlessShowSelectionPreferences? {
+        guard let appsToShow = preferenceValue(Preferences.appsToShow, at: shortcutIndex),
+              let spacesToShow = preferenceValue(Preferences.spacesToShow, at: shortcutIndex),
+              let screensToShow = preferenceValue(Preferences.screensToShow, at: shortcutIndex),
+              let showMinimizedWindows = preferenceValue(Preferences.showMinimizedWindows, at: shortcutIndex),
+              let showHiddenWindows = preferenceValue(Preferences.showHiddenWindows, at: shortcutIndex),
+              let showFullscreenWindows = preferenceValue(Preferences.showFullscreenWindows, at: shortcutIndex),
+              let showWindowlessApps = preferenceValue(Preferences.showWindowlessApps, at: shortcutIndex),
+              let windowOrder = preferenceValue(Preferences.windowOrder, at: shortcutIndex) else {
+            return nil
+        }
+        return HeadlessShowSelectionPreferences(
+            appsToShow: mapAppsToShow(appsToShow),
+            spacesToShow: mapSpacesToShow(spacesToShow),
+            screensToShow: mapScreensToShow(screensToShow),
+            showMinimizedWindows: mapShowHow(showMinimizedWindows),
+            showHiddenWindows: mapShowHow(showHiddenWindows),
+            showFullscreenWindows: mapShowHow(showFullscreenWindows),
+            showWindowlessApps: mapShowHow(showWindowlessApps),
+            windowOrder: mapWindowOrder(windowOrder),
+            showTabsAsWindows: Preferences.showTabsAsWindows,
+            onlyShowApplications: Preferences.onlyShowApplications(),
+            blacklist: Preferences.blacklist.map {
+                HeadlessShowBlacklistEntry(
+                    bundleIdentifier: $0.bundleIdentifier,
+                    hide: mapBlacklistHide($0.hide)
+                )
+            }
+        )
+    }
+
+    private static func preferenceValue<T>(_ values: [T], at index: Int) -> T? {
+        values.indices.contains(index) ? values[index] : nil
+    }
+
+    private static func selectableWindows(_ windows: [Window]) -> [HeadlessShowSelectionWindow] {
+        windows.enumerated().map { headlessShowSelectionWindow($0.element, windowListIndex: $0.offset) }
+    }
+
+    private static func headlessShowSelectionWindow(_ window: Window, windowListIndex: Int) -> HeadlessShowSelectionWindow {
+        HeadlessShowSelectionWindow(
+            windowListIndex: windowListIndex,
+            windowId: window.id,
+            cgWindowId: window.cgWindowId,
+            title: window.title,
+            appName: window.application.localizedName,
+            appBundleId: window.application.bundleIdentifier,
+            appPid: window.application.pid,
+            spaceIds: window.spaceIds.map { UInt64($0) },
+            spaceIndexes: window.spaceIndexes,
+            lastFocusOrder: window.lastFocusOrder,
+            creationOrder: window.creationOrder,
+            isTabbed: window.isTabbed,
+            isHidden: window.isHidden,
+            isFullscreen: window.isFullscreen,
+            isMinimized: window.isMinimized,
+            isOnAllSpaces: window.isOnAllSpaces,
+            isWindowlessApp: window.isWindowlessApp,
+            isOnPreferredScreen: window.isOnScreen(NSScreen.preferred)
+        )
+    }
+
+    private static func mapAppsToShow(_ value: AppsToShowPreference) -> HeadlessShowAppsToShow {
+        switch value {
+        case .all:
+            return .all
+        case .active:
+            return .active
+        case .nonActive:
+            return .nonActive
+        }
+    }
+
+    private static func mapSpacesToShow(_ value: SpacesToShowPreference) -> HeadlessShowSpacesToShow {
+        switch value {
+        case .all:
+            return .all
+        case .visible:
+            return .visible
+        }
+    }
+
+    private static func mapScreensToShow(_ value: ScreensToShowPreference) -> HeadlessShowScreensToShow {
+        switch value {
+        case .all:
+            return .all
+        case .showingAltTab:
+            return .showingAltTab
+        }
+    }
+
+    private static func mapShowHow(_ value: ShowHowPreference) -> HeadlessShowHow {
+        switch value {
+        case .hide:
+            return .hide
+        case .show:
+            return .show
+        case .showAtTheEnd:
+            return .showAtTheEnd
+        }
+    }
+
+    private static func mapWindowOrder(_ value: WindowOrderPreference) -> HeadlessWindowOrder {
+        switch value {
+        case .recentlyFocused:
+            return .recentlyFocused
+        case .recentlyCreated:
+            return .recentlyCreated
+        case .alphabetical:
+            return .alphabetical
+        case .space:
+            return .space
+        }
+    }
+
+    private static func mapBlacklistHide(_ value: BlacklistHidePreference) -> HeadlessShowBlacklistHide {
+        switch value {
+        case .always:
+            return .always
+        case .whenNoOpenWindow:
+            return .whenWindowless
+        case .none:
+            return .none
         }
     }
 
@@ -166,7 +349,7 @@ class CliClient {
     }
 
     static func printHelp() {
-        print("Usage: AltTabHeadless [--list | --detailed-list | --help]")
+        print("Usage: AltTabHeadless [--list | --detailed-list | --focus=<window_id> | --focusUsingLastFocusOrder=<focus_order> | --show=<shortcut_index> | --help]")
         print("Run with no arguments to start the headless daemon.")
     }
 
@@ -183,7 +366,7 @@ class CliClient {
                     exit(1)
                 }
                 if response == "\"\(CliServer.unsupported)\"" {
-                    print("Unsupported command in headless mode. Supported: --list, --detailed-list, --help")
+                    print("Unsupported command in headless mode. \(CliServer.supportedCommandsMessage)")
                     exit(1)
                 }
                 if response == "\"\(CliServer.warmingUpTimeout)\"" {

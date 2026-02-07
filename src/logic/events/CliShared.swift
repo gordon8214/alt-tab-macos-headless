@@ -39,16 +39,16 @@ struct CliCommandSupport {
     )
 
     static let headlessServer = CliCommandSupport(
-        supportsFocus: false,
-        supportsFocusUsingLastFocusOrder: false,
-        supportsShow: false,
+        supportsFocus: true,
+        supportsFocusUsingLastFocusOrder: true,
+        supportsShow: true,
         supportsHelp: false
     )
 
     static let headlessClient = CliCommandSupport(
-        supportsFocus: false,
-        supportsFocusUsingLastFocusOrder: false,
-        supportsShow: false,
+        supportsFocus: true,
+        supportsFocusUsingLastFocusOrder: true,
+        supportsShow: true,
         supportsHelp: true
     )
 }
@@ -160,7 +160,12 @@ enum CliShared {
     }
 
     static func shouldWaitForReadiness(_ rawValue: String) -> Bool {
-        rawValue == listCommand || rawValue == detailedListCommand
+        switch parseCommand(rawValue) {
+        case .list, .detailedList, .focus, .focusUsingLastFocusOrder, .show:
+            return true
+        case .help, .none:
+            return false
+        }
     }
 
     private static func parseCommand(_ rawValue: String) -> CliCommand? {

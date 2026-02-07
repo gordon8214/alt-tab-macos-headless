@@ -32,10 +32,22 @@ final class CliSharedTests: XCTestCase {
         XCTAssertEqual(mode, .sendCommand("--list"))
     }
 
-    func testDetectClientModeForHeadlessUnsupportedFocusCommand() {
+    func testDetectClientModeForHeadlessSupportedFocusCommand() {
         let mode = CliShared.detectClientMode(arguments: ["AltTabHeadless", "--focus=123"], support: .headlessClient)
 
-        XCTAssertEqual(mode, .unsupported("--focus=123"))
+        XCTAssertEqual(mode, .sendCommand("--focus=123"))
+    }
+
+    func testDetectClientModeForHeadlessSupportedFocusUsingLastFocusOrderCommand() {
+        let mode = CliShared.detectClientMode(arguments: ["AltTabHeadless", "--focusUsingLastFocusOrder=1"], support: .headlessClient)
+
+        XCTAssertEqual(mode, .sendCommand("--focusUsingLastFocusOrder=1"))
+    }
+
+    func testDetectClientModeForHeadlessSupportedShowCommand() {
+        let mode = CliShared.detectClientMode(arguments: ["AltTabHeadless", "--show=0"], support: .headlessClient)
+
+        XCTAssertEqual(mode, .sendCommand("--show=0"))
     }
 
     func testDetectClientModeForHeadlessHelpCommand() {
@@ -108,11 +120,31 @@ final class CliSharedTests: XCTestCase {
         XCTAssertEqual(CliShared.parseServerCommand("--focus=123", support: .guiServer), .focus(123))
     }
 
-    func testParseServerCommandRejectsFocusForHeadlessSupport() {
-        XCTAssertNil(CliShared.parseServerCommand("--focus=123", support: .headlessServer))
+    func testParseServerCommandParsesFocusForHeadlessSupport() {
+        XCTAssertEqual(CliShared.parseServerCommand("--focus=123", support: .headlessServer), .focus(123))
+    }
+
+    func testParseServerCommandParsesFocusUsingLastFocusOrderForHeadlessSupport() {
+        XCTAssertEqual(CliShared.parseServerCommand("--focusUsingLastFocusOrder=1", support: .headlessServer), .focusUsingLastFocusOrder(1))
+    }
+
+    func testParseServerCommandParsesShowForHeadlessSupport() {
+        XCTAssertEqual(CliShared.parseServerCommand("--show=0", support: .headlessServer), .show(0))
     }
 
     func testParseServerCommandRejectsOutOfRangeShowCommand() {
         XCTAssertNil(CliShared.parseServerCommand("--show=4", support: .guiServer))
+    }
+
+    func testShouldWaitForReadinessForFocusAndShowCommands() {
+        XCTAssertTrue(CliShared.shouldWaitForReadiness("--focus=123"))
+        XCTAssertTrue(CliShared.shouldWaitForReadiness("--focusUsingLastFocusOrder=1"))
+        XCTAssertTrue(CliShared.shouldWaitForReadiness("--show=0"))
+    }
+
+    func testShouldWaitForReadinessRejectsMalformedOrHelpCommands() {
+        XCTAssertFalse(CliShared.shouldWaitForReadiness("--focus=abc"))
+        XCTAssertFalse(CliShared.shouldWaitForReadiness("--show=9"))
+        XCTAssertFalse(CliShared.shouldWaitForReadiness("--help"))
     }
 }
