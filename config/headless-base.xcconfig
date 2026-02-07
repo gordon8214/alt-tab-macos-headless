@@ -1,6 +1,8 @@
 PRODUCT_NAME = AltTabHeadless
 PRODUCT_BUNDLE_IDENTIFIER = com.lwouis.alt-tab-macos.headless
 INFOPLIST_FILE = Info-headless.plist
+MARKETING_VERSION = 1.0
+CURRENT_PROJECT_VERSION = 1
 EXCLUDED_SOURCE_FILE_NAMES = \
   src/main.swift \
   src/ui/* \

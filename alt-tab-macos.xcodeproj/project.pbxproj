@@ -70,6 +70,8 @@
 		1C961FB59566B8314771F58E /* thumbnails_show_preview_focused_window_light@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1C961EF84B061A68FD9AEC46 /* thumbnails_show_preview_focused_window_light@2x.jpg */; };
 		234B43488AFE373C8D525E49 /* SkyLight.framework.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0C8B94D7994AB9007F6391 /* SkyLight.framework.swift */; };
 		2B4A7C6ABEC29EB1780CB866 /* SignalExitPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562A939A58589F79D3595218 /* SignalExitPolicy.swift */; };
+		2F4A4E0B6C1D4E0F9A7B3C21 /* LoggerShim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4A4E0B6C1D4E0F9A7B3C11 /* LoggerShim.swift */; };
+		2F4A4E0B6C1D4E0F9A7B3C22 /* PreferencesShim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4A4E0B6C1D4E0F9A7B3C12 /* PreferencesShim.swift */; };
 		30CA92C7ACEBEF8789B3F268 /* ScreensEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0C822D3BEDAB1F1C9F775E /* ScreensEvents.swift */; };
 		317F5A7C5B9DAF87264617F8 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04BA10777505D8A67ABD186 /* Application.swift */; };
 		35BA584DEE9DCBA5C26D37C9 /* SpacesEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0C8DF008F1EB5F23291A13 /* SpacesEvents.swift */; };
@@ -103,8 +105,6 @@
 		76C27EA0143A305543EC8F75 /* MacroPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0C8998862E0E04D60CACBC /* MacroPreferences.swift */; };
 		76D02BB22BFE7C9E0056008D /* Pods_alt_tab_macos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0712B3BEA2B3780398C0999 /* Pods_alt_tab_macos.framework */; };
 		7A1F973C6A52082C500A6B33 /* PermissionsShims.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F0F0D994EDFE73982D5888 /* PermissionsShims.swift */; };
-		2F4A4E0B6C1D4E0F9A7B3C21 /* LoggerShim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4A4E0B6C1D4E0F9A7B3C11 /* LoggerShim.swift */; };
-		2F4A4E0B6C1D4E0F9A7B3C22 /* PreferencesShim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4A4E0B6C1D4E0F9A7B3C12 /* PreferencesShim.swift */; };
 		816AF732756E32C9BC35B0DA /* ReadinessGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6518D59F8186C61C70EF6 /* ReadinessGate.swift */; };
 		84B804652ABF3338A3040C50 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04BA015A45DE7AFDC9794FE /* Window.swift */; };
 		9DE4DB913CB7E962AA52CF8C /* AppearanceTestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0C8D57C86AF492D43A576D /* AppearanceTestable.swift */; };
