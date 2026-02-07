@@ -82,6 +82,52 @@ class App: NSApplication {
         )
     }
 
+    private func showAccessibilityPermissionAlert(_ appPath: String) -> NSApplication.ModalResponse {
+        // LSUIElement apps may fail to surface modal alerts consistently without becoming regular first.
+        let wasRegular = activationPolicy() == .regular
+        if !wasRegular {
+            _ = setActivationPolicy(.regular)
+        }
+        defer {
+            if !wasRegular {
+                _ = setActivationPolicy(.accessory)
+            }
+        }
+
+        activate(ignoringOtherApps: true)
+        let alert = NSAlert()
+        alert.alertStyle = .critical
+        alert.messageText = NSLocalizedString("AltTab needs some permissions", comment: "")
+        alert.informativeText = """
+\(NSLocalizedString("This permission is needed to focus windows after you release the shortcut", comment: ""))
+
+App path: \(appPath)
+"""
+        alert.addButton(withTitle: NSLocalizedString("Open Accessibility Settings…", comment: ""))
+        alert.addButton(withTitle: NSLocalizedString("Open System Settings to confirm, and continue", comment: ""))
+        alert.addButton(withTitle: NSLocalizedString("Quit", comment: ""))
+        return alert.runModal()
+    }
+
+    private func ensureAccessibilityPermission() -> Bool {
+        let settingsUrl = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")
+        let appPath = Bundle.main.bundlePath
+        while AccessibilityPermission.update() != .granted {
+            switch showAccessibilityPermissionAlert(appPath) {
+            case .alertFirstButtonReturn:
+                if let settingsUrl {
+                    NSWorkspace.shared.open(settingsUrl)
+                }
+            case .alertSecondButtonReturn:
+                // Re-check permission immediately; users can switch back after toggling.
+                continue
+            default:
+                return false
+            }
+        }
+        return true
+    }
+
     private func launchHeadless() {
         Logger.initialize()
         Logger.info { "Launching \(App.name) \(App.version)" }
@@ -90,8 +136,8 @@ class App: NSApplication {
         AXUIElement.setGlobalTimeout()
         Preferences.initialize()
 
-        if AccessibilityPermission.update() != .granted {
-            failFast("Accessibility permission is required. Grant it in System Settings > Privacy & Security > Accessibility, then relaunch.")
+        if !ensureAccessibilityPermission() {
+            failFast("Accessibility permission is required for this app copy (\(Bundle.main.bundlePath)). Grant it in System Settings > Privacy & Security > Accessibility, then relaunch.")
         }
 
         BackgroundWork.startHeadless()

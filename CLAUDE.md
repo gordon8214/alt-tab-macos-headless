@@ -92,7 +92,7 @@ Commits follow [Conventional Commits](https://www.conventionalcommits.org/) enfo
 - Daemon/client IPC port: `com.lwouis.alt-tab-macos.headless.cli` (separate from GUI app port)
 - Readiness behavior: list/focus/show commands wait up to 5 seconds for initial discovery, then return explicit warm-up timeout error
 - Malformed focus/show payloads (e.g. non-numeric IDs or out-of-range shortcut indices) are treated as invalid commands and return the generic command error
-- Permission behavior: headless daemon fails fast when Accessibility permission is missing
+- Permission behavior: headless daemon blocks on an Accessibility-permission alert and retries until granted or the user explicitly quits
 - Startup mutual exclusion: headless refuses to start while GUI AltTab (`com.lwouis.alt-tab-macos`) is running, shows an error alert, and exits
 - Runtime refresh model: headless does not register long-lived Spaces/Screens observers; instead, each `--list` / `--detailed-list` request refreshes Spaces/Screens state and recalculates per-window space/screen mapping before JSON serialization. `--show=...` performs the same refresh before selecting a focus target.
 

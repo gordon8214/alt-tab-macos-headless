@@ -1,6 +1,13 @@
 # AltTab Headless
 
-This fork of [AltTab](https://github.com/lwouis/alt-tab-macos) provides a light-weight "headless" implementation of the core window-switching functionality for use via the CLI. It has no UI and allows for the core window 
+This fork of [AltTab](https://github.com/lwouis/alt-tab-macos) provides a light-weight "headless" implementation of the core window-switching functionality for use via the CLI. It has no window-switching UI and allows for the core window listing and switching functionality:
+
+- `--focus=<window_id>`: focus a specific window by `cgWindowId`.
+- `--focusUsingLastFocusOrder=<n>`: focus by `lastFocusOrder` from `--detailed-list`.
+- `--show=<shortcut_index>`: one-shot shortcut-aware cycle-and-focus (`shortcut_index` 0...3).
+- `--list`
+- `--detailed-list`
+- `--help`
 
 [![Screenshot](docs/public/demo/frontpage.jpg)](docs/public/demo/frontpage.jpg)
 
