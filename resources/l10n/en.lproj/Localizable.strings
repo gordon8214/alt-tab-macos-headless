@@ -22,7 +22,9 @@
 "AltTab crashed last time you used it. Sending a crash report will help get the issue fixed" = "AltTab crashed last time you used it. Sending a crash report will help get the issue fixed";
 "AltTab is currently set to show Applications. This setting is only available when AltTab is set to show Windows." = "AltTab is currently set to show Applications. This setting is only available when AltTab is set to show Windows.";
 "AltTab is running without Screen Recording permissions. Thumbnails won’t show." = "AltTab is running without Screen Recording permissions. Thumbnails won’t show.";
+"AltTab is already running" = "AltTab is already running";
 "AltTab needs some permissions" = "AltTab needs some permissions";
+"AltTabHeadless can't run while the full AltTab app is running. Quit AltTab and relaunch AltTabHeadless." = "AltTabHeadless can't run while the full AltTab app is running. Quit AltTab and relaunch AltTabHeadless.";
 "AltTab will show if the window is currently minimized or fullscreen with a status icon." = "AltTab will show if the window is currently minimized or fullscreen with a status icon.";
 "Always" = "Always";
 "Always send crash reports" = "Always send crash reports";

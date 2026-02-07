@@ -55,9 +55,37 @@ class App: NSApplication {
         }
     }
 
+    private func ensureGuiAltTabIsNotRunning() {
+        _ = HeadlessStartupConflictGuard.enforceNoGuiAltTabRunning(
+            runningAppsProvider: {
+                NSWorkspace.shared.runningApplications.map {
+                    HeadlessRunningAppSnapshot(
+                        pid: $0.processIdentifier,
+                        bundleIdentifier: $0.bundleIdentifier,
+                        isTerminated: $0.isTerminated
+                    )
+                }
+            },
+            currentPidProvider: { ProcessInfo.processInfo.processIdentifier },
+            presentConflictAlert: { _ in
+                self.activate(ignoringOtherApps: true)
+                let alert = NSAlert()
+                alert.alertStyle = .critical
+                alert.messageText = NSLocalizedString("AltTab is already running", comment: "")
+                alert.informativeText = NSLocalizedString("AltTabHeadless can't run while the full AltTab app is running. Quit AltTab and relaunch AltTabHeadless.", comment: "")
+                alert.addButton(withTitle: NSLocalizedString("Quit", comment: ""))
+                _ = alert.runModal()
+            },
+            failFast: { message in
+                self.failFast(message)
+            }
+        )
+    }
+
     private func launchHeadless() {
         Logger.initialize()
         Logger.info { "Launching \(App.name) \(App.version)" }
+        ensureGuiAltTabIsNotRunning()
 
         AXUIElement.setGlobalTimeout()
         Preferences.initialize()

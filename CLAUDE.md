@@ -51,6 +51,13 @@ Behavior:
 - SwiftFormat is currently **disabled project-wide** via `.swiftformatignore` (`**/*`), but the config exists for future use
 - Run `npm run format` to format, `npm run format:check` to lint
 
+### Localization Workflow
+- `resources/l10n/Localizable.strings` is the extracted source-of-truth for keys from `NSLocalizedString(...)`
+- `resources/l10n/en.lproj/Localizable.strings` should be updated in the same change for English fallback
+- After adding/changing localizable strings in source, run:
+  - `scripts/l10n/extract_l10n_strings.sh`
+- Optional translation sync is handled via `scripts/l10n/import_l10n_strings_from_poeditor.sh`
+
 ### Commit Convention
 Commits follow [Conventional Commits](https://www.conventionalcommits.org/) enforced by commitlint (e.g. `fix:`, `feat:`, `chore:`).
 
@@ -86,6 +93,7 @@ Commits follow [Conventional Commits](https://www.conventionalcommits.org/) enfo
 - Daemon/client IPC port: `com.lwouis.alt-tab-macos.headless.cli` (separate from GUI app port)
 - Readiness behavior: list commands wait up to 5 seconds for initial discovery, then return explicit warm-up timeout error
 - Permission behavior: headless daemon fails fast when Accessibility permission is missing
+- Startup mutual exclusion: headless refuses to start while GUI AltTab (`com.lwouis.alt-tab-macos`) is running, shows an error alert, and exits
 - Runtime refresh model: headless does not register long-lived Spaces/Screens observers; instead, each `--list` / `--detailed-list` request refreshes Spaces/Screens state and recalculates per-window space/screen mapping before JSON serialization
 
 ### Threading Model

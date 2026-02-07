@@ -28,6 +28,13 @@ SOURCE_REF=master TARGET_REF=headless scripts/headless/sync_check_from_master.sh
 
 The command performs a no-commit merge simulation in a temporary worktree, prints conflict files on failure, and runs the `Headless` build plus `Test` scheme checks on success.
 
+## Headless Runtime Guard
+
+`AltTabHeadless` and the full GUI `AltTab` app are mutually exclusive at startup.
+
+- Headless checks whether `com.lwouis.alt-tab-macos` is already running.
+- If a conflict is found, headless shows a critical alert and exits with status code `1` before starting background services.
+
 ## Team Signing Overrides (Distribution Builds)
 
 Use a local xcconfig override so teammates can build properly signed release binaries without editing tracked upstream files.

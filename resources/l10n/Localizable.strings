@@ -59,7 +59,13 @@
 "AltTab is running without Screen Recording permissions. Thumbnails won’t show." = "AltTab is running without Screen Recording permissions. Thumbnails won’t show.";
 
 /* No comment provided by engineer. */
+"AltTab is already running" = "AltTab is already running";
+
+/* No comment provided by engineer. */
 "AltTab needs some permissions" = "AltTab needs some permissions";
+
+/* No comment provided by engineer. */
+"AltTabHeadless can't run while the full AltTab app is running. Quit AltTab and relaunch AltTabHeadless." = "AltTabHeadless can't run while the full AltTab app is running. Quit AltTab and relaunch AltTabHeadless.";
 
 /* No comment provided by engineer. */
 "AltTab will show if the window is currently minimized or fullscreen with a status icon." = "AltTab will show if the window is currently minimized or fullscreen with a status icon.";
