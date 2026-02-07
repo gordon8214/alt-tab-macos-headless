@@ -153,6 +153,7 @@
 		BF0C84E5AC1D423625ABF3E6 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0C829EAA93A4C4ADB42CF8 /* Mocks.swift */; };
 		BF0C8521DA3078516615C414 /* HelperExtensionsTestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0C810FA0F6BC70E5886E11 /* HelperExtensionsTestable.swift */; };
 		BF0C852D28E458CDD6FA3E44 /* app.icns in Resources */ = {isa = PBXBuildFile; fileRef = BF0C84E11784B3B0900D0963 /* app.icns */; };
+		E12D86A52C5EDC7300D2F1A1 /* app.icns in Resources */ = {isa = PBXBuildFile; fileRef = BF0C84E11784B3B0900D0963 /* app.icns */; };
 		BF0C853B271C4407E87FA183 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BF0C8096A88BC18C4902C037 /* InfoPlist.strings */; };
 		BF0C8571D70170B73B46A262 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BF0C86631FA950CE81FB8542 /* Localizable.strings */; };
 		BF0C8588259FE20E161F67E4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BF0C803A0202BA8D9397E0CA /* InfoPlist.strings */; };
@@ -2298,6 +2299,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E12D86A52C5EDC7300D2F1A1 /* app.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
