@@ -104,7 +104,7 @@ enum CliShared {
             return .daemon
         }
         if args.count != 1 {
-            return .invalid
+            return containsExplicitCliLikeArg(args) ? .invalid : .daemon
         }
 
         let arg = args[0]
@@ -118,6 +118,10 @@ enum CliShared {
 
         if isUnsupportedCommand(arg, support: support) {
             return .unsupported(arg)
+        }
+
+        if !arg.starts(with: "--") {
+            return .daemon
         }
 
         return .invalid
@@ -212,6 +216,10 @@ enum CliShared {
             return false
         }
         return ignoredInjectedFlags.contains(arg) || arg.hasPrefix("-psn_") || arg.hasPrefix("-")
+    }
+
+    private static func containsExplicitCliLikeArg(_ args: [String]) -> Bool {
+        args.contains { $0.starts(with: "--") }
     }
 
     private static func indexAfterSkippingInjectedValue(_ args: [String], currentIndex: Int) -> Int {

@@ -76,6 +76,28 @@ final class CliSharedTests: XCTestCase {
         XCTAssertEqual(mode, .daemon)
     }
 
+    func testDetectClientModeForHeadlessTreatsUnexpectedPositionalArgumentAsDaemon() {
+        let mode = CliShared.detectClientMode(arguments: ["AltTabHeadless", "FinderLaunchToken"], support: .headlessClient)
+
+        XCTAssertEqual(mode, .daemon)
+    }
+
+    func testDetectClientModeForHeadlessTreatsOnlyNonCliArgumentsAsDaemon() {
+        let mode = CliShared.detectClientMode(arguments: [
+            "AltTabHeadless",
+            "FinderLaunchToken",
+            "AnotherNonCliValue",
+        ], support: .headlessClient)
+
+        XCTAssertEqual(mode, .daemon)
+    }
+
+    func testDetectClientModeForHeadlessStillRejectsUnknownDoubleDashArgument() {
+        let mode = CliShared.detectClientMode(arguments: ["AltTabHeadless", "--unknown"], support: .headlessClient)
+
+        XCTAssertEqual(mode, .invalid)
+    }
+
     func testDetectClientModeForGuiAllowsFocusPrefixEvenWithInvalidValue() {
         let mode = CliShared.detectClientMode(arguments: ["AltTab", "--focus=not-a-number"], support: .guiClient)
 
