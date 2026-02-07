@@ -43,8 +43,8 @@ The command performs a no-commit merge simulation in a temporary worktree, print
 - `--show=<shortcut_index>`: one-shot shortcut-aware cycle-and-focus action (headless equivalent of triggering a shortcut)
 - `--help`: print usage
 
-Run with no arguments to start the headless daemon. List/focus/show commands wait up to 5 seconds for initial discovery, then return a warm-up timeout if still not ready.
-Malformed focus/show payloads (for example `--focus=abc` or `--show=9`) are treated as invalid commands and return the generic command error response.
+Run with no arguments to start the headless daemon. `--list`, `--detailed-list`, `--focus=...`, `--focusUsingLastFocusOrder=...`, and `--show=...` wait up to 5 seconds for initial discovery, then return a warm-up timeout if still not ready.
+Malformed `--focus=...`, `--focusUsingLastFocusOrder=...`, and `--show=...` payloads (for example `--focus=abc`, `--focusUsingLastFocusOrder=abc`, or `--show=9`) are treated as invalid commands and return the generic command error response.
 
 ## Team Signing Overrides (Distribution Builds)
 
