@@ -55,6 +55,27 @@ final class CliSharedTests: XCTestCase {
         XCTAssertEqual(mode, .sendCommand("--detailed-list"))
     }
 
+    func testDetectClientModeForHeadlessIgnoresUnknownSingleDashInjectedFlags() {
+        let mode = CliShared.detectClientMode(arguments: [
+            "AltTabHeadless",
+            "-NSQuitAlwaysKeepsWindows",
+            "NO",
+            "--list",
+        ], support: .headlessClient)
+
+        XCTAssertEqual(mode, .sendCommand("--list"))
+    }
+
+    func testDetectClientModeForHeadlessTreatsInjectedLaunchFlagsOnlyAsDaemon() {
+        let mode = CliShared.detectClientMode(arguments: [
+            "AltTabHeadless",
+            "-NSQuitAlwaysKeepsWindows",
+            "NO",
+        ], support: .headlessClient)
+
+        XCTAssertEqual(mode, .daemon)
+    }
+
     func testDetectClientModeForGuiAllowsFocusPrefixEvenWithInvalidValue() {
         let mode = CliShared.detectClientMode(arguments: ["AltTab", "--focus=not-a-number"], support: .guiClient)
 

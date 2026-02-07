@@ -208,12 +208,15 @@ enum CliShared {
     }
 
     private static func shouldIgnoreInjectedFlag(_ arg: String) -> Bool {
-        ignoredInjectedFlags.contains(arg) || arg.hasPrefix("-psn_")
+        if arg.hasPrefix("--") {
+            return false
+        }
+        return ignoredInjectedFlags.contains(arg) || arg.hasPrefix("-psn_") || arg.hasPrefix("-")
     }
 
     private static func indexAfterSkippingInjectedValue(_ args: [String], currentIndex: Int) -> Int {
         let nextIndex = args.index(after: currentIndex)
-        guard ignoredInjectedFlags.contains(args[currentIndex]),
+        guard shouldIgnoreInjectedFlag(args[currentIndex]),
               nextIndex < args.endIndex,
               !args[nextIndex].starts(with: "-") else {
             return nextIndex
