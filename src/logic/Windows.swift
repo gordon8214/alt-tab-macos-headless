@@ -106,7 +106,8 @@ class Windows {
     }
 
     static func updatesBeforeShowing() -> Bool {
-        if list.count == 0 || MissionControl.state() == .showAllWindows || MissionControl.state() == .showFrontWindows { return false }
+        if MissionControl.state() == .showAllWindows || MissionControl.state() == .showFrontWindows { return false }
+        if list.isEmpty { return true }
         // TODO: find a way to update space info when spaces are changed, instead of on every trigger
         // workaround: when Preferences > Mission Control > "Displays have separate Spaces" is unchecked,
         // switching between displays doesn't trigger .activeSpaceDidChangeNotification; we get the latest manually
@@ -121,7 +122,6 @@ class Windows {
         }
         refreshWhichWindowsToShowTheUser()
         sort()
-        if (!list.contains { $0.shouldShowTheUser }) { return false }
         return true
     }
 
@@ -129,7 +129,8 @@ class Windows {
     static func refreshThumbnailsAsync(_ windows: [Window], _ source: RefreshCausedBy, windowRemoved: Bool = false) {
         guard (!windows.isEmpty || windowRemoved) && ScreenRecordingPermission.status == .granted
                && !Preferences.onlyShowApplications()
-               && (!Appearance.hideThumbnails || Preferences.previewSelectedWindow) else { return }
+               && (!Appearance.hideThumbnails || Preferences.previewSelectedWindow)
+               && (Preferences.captureWindowsInBackground || App.appIsBeingUsed) else { return }
         var eligibleWindows = [Window]()
         for window in windows {
             if !window.isWindowlessApp, let cgWindowId = window.cgWindowId, cgWindowId != CGWindowID(bitPattern: -1) {
